@@ -1,0 +1,28 @@
+id: wvs
+name: Willamette Valley Southern Railway
+operator: Willamette Valley Southern Railway Co.
+opened: 1915-01-30
+closed: 1933-04-09          # passenger service; freight ended 1938-09-15
+timezone: America/Los_Angeles
+colour: "#8b2e1f"
+
+eras:
+  - id: "1915"
+    label: Oregon City – Mt. Angel
+    days: daily
+    source: thompson
+    notes:
+      - Times are 24-hour; the card prints A.M. in light face and P.M. in bold.
+      - A "~" time is reconstructed. Train 7 at Molalla is printed 9.20, which
+        falls between Kayler 9.27 and Richard 9.33, so it is read as 9.30.
+      - Eby is not on this card; it first appears on the 1926 timetable.
+
+sources:
+  plats: >-
+    PEPCO right-of-way plats; track and stations traced by Anthony Blackham.
+  thompson: >-
+    Richard Thompson, Willamette Valley Railways (Arcadia Publishing),
+    WVS Oregon City–Mt. Angel timetable.
+  booth: >-
+    Cameron Booth, Portland Streetcar History wiki, "Mount Angel (1915–1933)"
+    (opening and abandonment dates).
