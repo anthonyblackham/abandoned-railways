@@ -1,0 +1,309 @@
+direction,train,station,time_24h,flag_stop,read_confidence
+Westbound to Magones,2,West Linn (leave),06:20,,ok
+Westbound to Magones,2,Bolton,,yes,ok
+Westbound to Magones,2,Magones,06:27,,ok
+Westbound to Magones,4,Tualatin River,06:23,,ok
+Westbound to Magones,4,Willamette,06:25,,ok
+Westbound to Magones,4,Junction,06:37,yes,ok
+Westbound to Magones,4,West Linn (arrive),06:39,,ok
+Westbound to Magones,6,Tualatin River,06:54,,ok
+Westbound to Magones,6,Willamette,06:56,,low
+Westbound to Magones,6,Junction,07:07,yes,ok
+Westbound to Magones,6,West Linn (arrive),07:09,,ok
+Westbound to Magones,8,West Linn (leave),06:55,,ok
+Westbound to Magones,8,Bolton,,yes,ok
+Westbound to Magones,8,Magones,07:02,,ok
+Westbound to Magones,10,Tualatin River,07:24,,ok
+Westbound to Magones,10,Willamette,07:26,,ok
+Westbound to Magones,10,Junction,07:37,yes,ok
+Westbound to Magones,10,West Linn (arrive),07:39,,ok
+Westbound to Magones,12,West Linn (leave),07:35,,ok
+Westbound to Magones,12,Bolton,,yes,ok
+Westbound to Magones,12,Magones,07:42,,ok
+Westbound to Magones,14,Tualatin River,08:03,,ok
+Westbound to Magones,14,Willamette,08:05,,ok
+Westbound to Magones,14,Junction,08:17,yes,ok
+Westbound to Magones,14,West Linn (arrive),08:19,,ok
+Westbound to Magones,16,West Linn (leave),08:20,,ok
+Westbound to Magones,16,Bolton,,yes,ok
+Westbound to Magones,16,Magones,08:27,,ok
+Westbound to Magones,18,Tualatin River,08:36,,ok
+Westbound to Magones,18,Willamette,08:38,yes,ok
+Westbound to Magones,18,Junction,08:50,yes,ok
+Westbound to Magones,18,West Linn (arrive),08:53,,ok
+Westbound to Magones,18,West Linn (leave),09:15,,ok
+Westbound to Magones,18,Bolton,,yes,ok
+Westbound to Magones,18,Magones,09:22,,ok
+Westbound to Magones,20,Willamette,09:45,,ok
+Westbound to Magones,20,Junction,09:57,yes,ok
+Westbound to Magones,20,West Linn (arrive),10:00,,ok
+Westbound to Magones,20,West Linn (leave),10:00,,ok
+Westbound to Magones,20,Bolton,,yes,ok
+Westbound to Magones,20,Magones,10:07,,ok
+Westbound to Magones,22,Tualatin River,10:38,,ok
+Westbound to Magones,22,Willamette,10:40,,ok
+Westbound to Magones,22,Junction,10:52,yes,ok
+Westbound to Magones,22,West Linn (arrive),10:55,,low
+Westbound to Magones,22,West Linn (leave),10:55,,ok
+Westbound to Magones,22,Bolton,,yes,ok
+Westbound to Magones,22,Magones,11:02,,ok
+Westbound to Magones,24,Tualatin River,11:33,,ok
+Westbound to Magones,24,Willamette,11:35,,ok
+Westbound to Magones,24,Junction,11:47,yes,ok
+Westbound to Magones,24,West Linn (arrive),11:50,,ok
+Westbound to Magones,24,West Linn (leave),11:50,,ok
+Westbound to Magones,24,Bolton,,yes,ok
+Westbound to Magones,24,Magones,11:57,,ok
+Westbound to Magones,26,Willamette,12:25,,ok
+Westbound to Magones,26,Junction,12:37,yes,ok
+Westbound to Magones,26,West Linn (arrive),12:39,,ok
+Westbound to Magones,28,Tualatin River,12:56,,ok
+Westbound to Magones,28,Willamette,12:58,yes,ok
+Westbound to Magones,28,Junction,13:08,yes,ok
+Westbound to Magones,28,West Linn (arrive),13:10,,ok
+Westbound to Magones,28,West Linn (leave),13:10,,ok
+Westbound to Magones,28,Bolton,,yes,ok
+Westbound to Magones,28,Magones,13:17,,ok
+Westbound to Magones,30,Tualatin River,13:48,,ok
+Westbound to Magones,30,Willamette,13:50,,ok
+Westbound to Magones,30,Junction,14:02,yes,ok
+Westbound to Magones,30,West Linn (arrive),14:05,,ok
+Westbound to Magones,30,West Linn (leave),14:05,,ok
+Westbound to Magones,30,Bolton,,yes,ok
+Westbound to Magones,30,Magones,14:12,,ok
+Westbound to Magones,32,Willamette,14:35,,ok
+Westbound to Magones,32,Junction,14:47,yes,ok
+Westbound to Magones,32,West Linn (arrive),14:50,,ok
+Westbound to Magones,32,West Linn (leave),14:50,,low
+Westbound to Magones,32,Bolton,,yes,ok
+Westbound to Magones,32,Magones,14:57,,ok
+Westbound to Magones,34,Tualatin River,15:20,,ok
+Westbound to Magones,34,Willamette,15:22,,ok
+Westbound to Magones,34,Junction,15:34,yes,ok
+Westbound to Magones,34,West Linn (arrive),15:37,,ok
+Westbound to Magones,34,West Linn (leave),15:37,,ok
+Westbound to Magones,34,Bolton,,yes,ok
+Westbound to Magones,34,Magones,15:44,,ok
+Westbound to Magones,36,Tualatin River,16:31,,ok
+Westbound to Magones,36,Willamette,16:33,yes,ok
+Westbound to Magones,36,Junction,16:45,yes,ok
+Westbound to Magones,36,West Linn (arrive),16:48,,ok
+Westbound to Magones,36,West Linn (leave),17:00,,ok
+Westbound to Magones,36,Bolton,,yes,ok
+Westbound to Magones,36,Magones,17:07,,ok
+Westbound to Magones,40,Tualatin River,17:31,,ok
+Westbound to Magones,40,Willamette,17:32,yes,low
+Westbound to Magones,40,Junction,17:41,yes,ok
+Westbound to Magones,40,West Linn (arrive),17:44,,ok
+Westbound to Magones,42,West Linn (leave),17:45,,ok
+Westbound to Magones,42,Bolton,,yes,ok
+Westbound to Magones,42,Magones,17:52,,ok
+Westbound to Magones,44,Willamette,18:00,,ok
+Westbound to Magones,44,Junction,18:12,yes,ok
+Westbound to Magones,44,West Linn (arrive),18:14,,ok
+Westbound to Magones,46,West Linn (leave),18:15,,ok
+Westbound to Magones,46,Bolton,,yes,ok
+Westbound to Magones,46,Magones,18:22,,ok
+Westbound to Magones,48,Tualatin River,18:30,,ok
+Westbound to Magones,48,Willamette,18:32,,ok
+Westbound to Magones,48,Junction,18:42,yes,ok
+Westbound to Magones,48,West Linn (arrive),18:44,,ok
+Westbound to Magones,50,Tualatin River,19:01,,ok
+Westbound to Magones,50,Willamette,19:03,,ok
+Westbound to Magones,50,Junction,19:12,yes,ok
+Westbound to Magones,50,West Linn (arrive),19:15,,ok
+Westbound to Magones,50,West Linn (leave),19:15,,ok
+Westbound to Magones,50,Bolton,,yes,ok
+Westbound to Magones,50,Magones,19:22,,ok
+Westbound to Magones,52,Tualatin River,19:46,,low
+Westbound to Magones,52,Willamette,19:48,,low
+Westbound to Magones,52,Junction,19:57,yes,ok
+Westbound to Magones,52,West Linn (arrive),20:00,,ok
+Westbound to Magones,52,West Linn (leave),20:00,,ok
+Westbound to Magones,52,Bolton,,yes,ok
+Westbound to Magones,52,Magones,20:07,,ok
+Westbound to Magones,54,Tualatin River,20:31,,ok
+Westbound to Magones,54,Willamette,20:33,,ok
+Westbound to Magones,54,Junction,20:42,yes,ok
+Westbound to Magones,54,West Linn (arrive),20:45,,ok
+Westbound to Magones,54,West Linn (leave),20:45,,ok
+Westbound to Magones,54,Bolton,,yes,ok
+Westbound to Magones,54,Magones,20:52,,ok
+Westbound to Magones,56,Tualatin River,21:26,,ok
+Westbound to Magones,56,Willamette,21:28,,ok
+Westbound to Magones,56,Junction,21:37,yes,ok
+Westbound to Magones,56,West Linn (arrive),21:40,,ok
+Westbound to Magones,56,West Linn (leave),21:45,,ok
+Westbound to Magones,56,Bolton,,yes,ok
+Westbound to Magones,56,Magones,21:52,,ok
+Westbound to Magones,58,Tualatin River,22:26,,ok
+Westbound to Magones,58,Willamette,22:28,,ok
+Westbound to Magones,58,Junction,22:37,yes,ok
+Westbound to Magones,58,West Linn (arrive),22:40,,ok
+Westbound to Magones,58,West Linn (leave),22:45,,ok
+Westbound to Magones,58,Bolton,,yes,ok
+Westbound to Magones,58,Magones,22:52,,ok
+Westbound to Magones,60,Tualatin River,23:26,,ok
+Westbound to Magones,60,Willamette,23:28,,ok
+Westbound to Magones,60,Junction,23:37,yes,ok
+Westbound to Magones,60,West Linn (arrive),23:40,,ok
+Westbound to Magones,60,West Linn (leave),00:15,,ok
+Westbound to Magones,60,Bolton,00:20,,ok
+Westbound to Magones,62,Tualatin River,00:41,,ok
+Westbound to Magones,62,Willamette,00:42,yes,ok
+Westbound to Magones,62,Junction,00:50,,ok
+Westbound to Magones,62,West Linn (arrive),00:53,,ok
+Eastbound to Tualatin River,1,Tualatin River,06:22,,ok
+Eastbound to Tualatin River,1,Willamette,06:20,,ok
+Eastbound to Tualatin River,1,Junction,06:08,yes,ok
+Eastbound to Tualatin River,1,West Linn (leave),06:05,,ok
+Eastbound to Tualatin River,3,Tualatin River,06:53,,low
+Eastbound to Tualatin River,3,Willamette,06:51,,low
+Eastbound to Tualatin River,3,Junction,06:42,yes,ok
+Eastbound to Tualatin River,3,West Linn (leave),06:40,,ok
+Eastbound to Tualatin River,5,West Linn (arrive),06:35,,ok
+Eastbound to Tualatin River,5,Bolton,,yes,ok
+Eastbound to Tualatin River,5,Magones,06:28,,ok
+Eastbound to Tualatin River,7,Tualatin River,07:23,,ok
+Eastbound to Tualatin River,7,Willamette,07:21,,ok
+Eastbound to Tualatin River,7,Junction,07:12,yes,ok
+Eastbound to Tualatin River,7,West Linn (leave),07:10,,ok
+Eastbound to Tualatin River,9,West Linn (arrive),07:10,,ok
+Eastbound to Tualatin River,9,Bolton,,yes,ok
+Eastbound to Tualatin River,9,Magones,07:03,,ok
+Eastbound to Tualatin River,11,Tualatin River,07:59,,low
+Eastbound to Tualatin River,11,Willamette,07:55,,low
+Eastbound to Tualatin River,11,Junction,07:43,yes,ok
+Eastbound to Tualatin River,11,West Linn (leave),07:40,,ok
+Eastbound to Tualatin River,13,West Linn (arrive),07:50,,ok
+Eastbound to Tualatin River,13,Bolton,,yes,ok
+Eastbound to Tualatin River,13,Magones,07:43,,ok
+Eastbound to Tualatin River,15,Tualatin River,08:35,,ok
+Eastbound to Tualatin River,15,Willamette,08:33,,ok
+Eastbound to Tualatin River,15,Junction,08:23,yes,ok
+Eastbound to Tualatin River,15,West Linn (leave),08:20,,ok
+Eastbound to Tualatin River,17,West Linn (arrive),08:35,,ok
+Eastbound to Tualatin River,17,Bolton,,yes,ok
+Eastbound to Tualatin River,17,Magones,08:28,,ok
+Eastbound to Tualatin River,19,Willamette,09:44,,ok
+Eastbound to Tualatin River,19,Junction,09:33,yes,ok
+Eastbound to Tualatin River,19,West Linn (arrive),09:30,,ok
+Eastbound to Tualatin River,19,West Linn (leave),09:30,,ok
+Eastbound to Tualatin River,19,Bolton,,yes,ok
+Eastbound to Tualatin River,19,Magones,09:23,,ok
+Eastbound to Tualatin River,21,Tualatin River,10:34,,ok
+Eastbound to Tualatin River,21,Willamette,10:30,,ok
+Eastbound to Tualatin River,21,Junction,10:18,yes,ok
+Eastbound to Tualatin River,21,West Linn (arrive),10:15,,ok
+Eastbound to Tualatin River,21,West Linn (leave),10:15,,ok
+Eastbound to Tualatin River,21,Bolton,,yes,ok
+Eastbound to Tualatin River,21,Magones,10:08,,ok
+Eastbound to Tualatin River,23,Tualatin River,11:29,,low
+Eastbound to Tualatin River,23,Willamette,11:25,,ok
+Eastbound to Tualatin River,23,Junction,11:13,yes,ok
+Eastbound to Tualatin River,23,West Linn (arrive),11:10,,ok
+Eastbound to Tualatin River,23,West Linn (leave),11:10,,ok
+Eastbound to Tualatin River,23,Bolton,,yes,ok
+Eastbound to Tualatin River,23,Magones,11:03,,ok
+Eastbound to Tualatin River,25,Willamette,12:24,,ok
+Eastbound to Tualatin River,25,Junction,12:13,yes,ok
+Eastbound to Tualatin River,25,West Linn (arrive),12:05,,ok
+Eastbound to Tualatin River,25,West Linn (leave),12:10,,ok
+Eastbound to Tualatin River,25,Bolton,,yes,ok
+Eastbound to Tualatin River,25,Magones,11:58,,ok
+Eastbound to Tualatin River,27,Tualatin River,12:55,,ok
+Eastbound to Tualatin River,27,Willamette,12:53,,ok
+Eastbound to Tualatin River,27,Junction,12:43,yes,ok
+Eastbound to Tualatin River,27,West Linn (leave),12:40,,ok
+Eastbound to Tualatin River,29,Tualatin River,13:44,,ok
+Eastbound to Tualatin River,29,Willamette,13:40,,ok
+Eastbound to Tualatin River,29,Junction,13:28,yes,ok
+Eastbound to Tualatin River,29,West Linn (arrive),13:25,,ok
+Eastbound to Tualatin River,29,West Linn (leave),13:25,,ok
+Eastbound to Tualatin River,29,Bolton,,yes,ok
+Eastbound to Tualatin River,29,Magones,13:18,,ok
+Eastbound to Tualatin River,31,Willamette,14:34,,ok
+Eastbound to Tualatin River,31,Junction,14:23,yes,ok
+Eastbound to Tualatin River,31,West Linn (arrive),14:20,,ok
+Eastbound to Tualatin River,31,West Linn (leave),14:20,,ok
+Eastbound to Tualatin River,31,Bolton,,yes,ok
+Eastbound to Tualatin River,31,Magones,14:13,,ok
+Eastbound to Tualatin River,33,Tualatin River,15:19,,ok
+Eastbound to Tualatin River,33,Willamette,15:17,,ok
+Eastbound to Tualatin River,33,Junction,15:07,yes,ok
+Eastbound to Tualatin River,33,West Linn (arrive),15:05,,ok
+Eastbound to Tualatin River,33,West Linn (leave),15:05,,ok
+Eastbound to Tualatin River,33,Bolton,,yes,ok
+Eastbound to Tualatin River,33,Magones,14:58,,ok
+Eastbound to Tualatin River,35,Tualatin River,16:30,,ok
+Eastbound to Tualatin River,35,Willamette,16:28,,ok
+Eastbound to Tualatin River,35,Junction,16:18,yes,ok
+Eastbound to Tualatin River,35,West Linn (arrive),15:52,,ok
+Eastbound to Tualatin River,35,West Linn (leave),16:15,,ok
+Eastbound to Tualatin River,35,Bolton,,yes,ok
+Eastbound to Tualatin River,35,Magones,15:45,,ok
+Eastbound to Tualatin River,39,Tualatin River,17:35,,ok
+Eastbound to Tualatin River,39,Willamette,17:28,yes,ok
+Eastbound to Tualatin River,39,Junction,17:18,yes,ok
+Eastbound to Tualatin River,39,West Linn (arrive),17:15,,ok
+Eastbound to Tualatin River,39,West Linn (leave),17:15,,ok
+Eastbound to Tualatin River,39,Bolton,,yes,ok
+Eastbound to Tualatin River,39,Magones,17:08,,ok
+Eastbound to Tualatin River,41,Willamette,17:59,,ok
+Eastbound to Tualatin River,41,Junction,17:48,yes,ok
+Eastbound to Tualatin River,41,West Linn (leave),17:45,,ok
+Eastbound to Tualatin River,43,West Linn (arrive),18:00,,ok
+Eastbound to Tualatin River,43,Bolton,,yes,ok
+Eastbound to Tualatin River,43,Magones,17:53,,ok
+Eastbound to Tualatin River,45,Tualatin River,18:29,,ok
+Eastbound to Tualatin River,45,Willamette,18:27,,ok
+Eastbound to Tualatin River,45,Junction,18:17,yes,ok
+Eastbound to Tualatin River,45,West Linn (leave),18:15,,ok
+Eastbound to Tualatin River,47,West Linn (arrive),18:30,,ok
+Eastbound to Tualatin River,47,Bolton,,yes,ok
+Eastbound to Tualatin River,47,Magones,18:23,,ok
+Eastbound to Tualatin River,49,Tualatin River,19:00,,low
+Eastbound to Tualatin River,49,Willamette,18:59,,low
+Eastbound to Tualatin River,49,Junction,18:48,yes,ok
+Eastbound to Tualatin River,49,West Linn (leave),18:45,,ok
+Eastbound to Tualatin River,51,Tualatin River,19:45,,ok
+Eastbound to Tualatin River,51,Willamette,19:43,,ok
+Eastbound to Tualatin River,51,Junction,19:33,yes,ok
+Eastbound to Tualatin River,51,West Linn (arrive),19:30,,low
+Eastbound to Tualatin River,51,West Linn (leave),19:30,,ok
+Eastbound to Tualatin River,51,Bolton,,yes,ok
+Eastbound to Tualatin River,51,Magones,19:23,,ok
+Eastbound to Tualatin River,53,Tualatin River,20:30,,ok
+Eastbound to Tualatin River,53,Willamette,20:28,,ok
+Eastbound to Tualatin River,53,Junction,20:18,yes,ok
+Eastbound to Tualatin River,53,West Linn (arrive),20:15,,ok
+Eastbound to Tualatin River,53,West Linn (leave),20:15,,ok
+Eastbound to Tualatin River,53,Bolton,,yes,ok
+Eastbound to Tualatin River,53,Magones,20:08,,ok
+Eastbound to Tualatin River,55,Tualatin River,21:25,,ok
+Eastbound to Tualatin River,55,Willamette,21:23,,ok
+Eastbound to Tualatin River,55,Junction,21:13,yes,ok
+Eastbound to Tualatin River,55,West Linn (arrive),21:00,,ok
+Eastbound to Tualatin River,55,West Linn (leave),21:10,,ok
+Eastbound to Tualatin River,55,Bolton,,yes,ok
+Eastbound to Tualatin River,55,Magones,20:53,,ok
+Eastbound to Tualatin River,57,Tualatin River,22:25,,ok
+Eastbound to Tualatin River,57,Willamette,22:23,,ok
+Eastbound to Tualatin River,57,Junction,22:13,yes,ok
+Eastbound to Tualatin River,57,West Linn (arrive),22:00,,ok
+Eastbound to Tualatin River,57,West Linn (leave),22:10,,ok
+Eastbound to Tualatin River,57,Bolton,,yes,ok
+Eastbound to Tualatin River,57,Magones,21:53,,ok
+Eastbound to Tualatin River,59,Tualatin River,23:25,,low
+Eastbound to Tualatin River,59,Willamette,23:23,,ok
+Eastbound to Tualatin River,59,Junction,23:13,yes,ok
+Eastbound to Tualatin River,59,West Linn (arrive),23:00,,ok
+Eastbound to Tualatin River,59,West Linn (leave),23:10,,ok
+Eastbound to Tualatin River,59,Bolton,,yes,ok
+Eastbound to Tualatin River,59,Magones,22:53,,ok
+Eastbound to Tualatin River,61,Tualatin River,00:40,,ok
+Eastbound to Tualatin River,61,Willamette,00:38,yes,ok
+Eastbound to Tualatin River,61,Junction,00:28,yes,ok
+Eastbound to Tualatin River,61,West Linn (arrive),00:25,,ok
+Eastbound to Tualatin River,61,West Linn (leave),00:25,,ok
+Eastbound to Tualatin River,61,Bolton,00:21,,ok

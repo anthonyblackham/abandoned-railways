@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abandoned Railways</title>
+<meta name="description" content="Timetables of defunct railways replayed against today's clock.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="map"></div>
+
+<aside id="panel">
+  <header>
+    <button id="back" class="back" hidden>← All lines</button>
+    <h1 id="name">Abandoned Railways</h1>
+    <p id="years" class="muted"></p>
+    <label class="era" id="era-pick" hidden>Timetable <select id="era"></select></label>
+  </header>
+
+  <section class="clock">
+    <div class="clock-row">
+      <div id="time" class="time">--:--</div>
+      <div id="mode" class="muted"></div>
+    </div>
+    <input id="scrub" type="range" min="0" max="86399" step="60" aria-label="Time of day">
+    <div class="controls">
+      <button id="live" class="on">Live</button>
+      <button data-speed="1">1×</button>
+      <button data-speed="10">10×</button>
+      <button data-speed="60">60×</button>
+    </div>
+  </section>
+
+  <div id="network-view">
+    <section>
+      <h2>Lines</h2>
+      <ul id="lines" class="list"></ul>
+    </section>
+    <section>
+      <h2>Next departures</h2>
+      <ul id="network-upcoming" class="list"></ul>
+    </section>
+  </div>
+
+  <div id="line-view" hidden>
+    <section>
+      <h2>On the line</h2>
+      <ul id="running" class="list"></ul>
+    </section>
+    <section>
+      <h2>Next departures</h2>
+      <ul id="upcoming" class="list"></ul>
+    </section>
+    <section>
+      <h2>Layers</h2>
+      <div id="layers"></div>
+    </section>
+  </div>
+
+  <footer>
+    <p id="source" class="muted"></p>
+    <p><a id="feed" href="#" hidden>Download GTFS</a><span id="feed-sep" hidden> · </span><a href="https://github.com/anthonyblackham/abandoned-railways">Source</a></p>
+  </footer>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

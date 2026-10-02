@@ -1,0 +1,35 @@
+id: willamette-falls-electric-railway
+name: Willamette Falls Railway
+operator: Willamette Falls Railway Co. (Southern Pacific from 1915)
+opened: 1894              # electric freight from April 1894; first track built 1893
+closed: 1930              # passenger service ended 1930; electric logging to the West Linn mill ran until 1933
+timezone: America/Los_Angeles
+colour: "#2f5d8a"
+
+eras:
+  - id: "1925"
+    label: Tualatin River – West Linn – Magones
+    days: daily
+    source: west-linn
+    notes:
+      - Times are 24-hour; 24:xx is after midnight on the same service day.
+      - A "~" time was hard to read on the card.
+      - Most trains run only one half of the line (Tualatin River – West Linn or West Linn – Magones);
+        through trains wait at West Linn between their arrive and leave times.
+      - Train 60 is printed ending at Bolton (24:20), with no Magones time.
+      - Magones to Walling carried freight and log cars only.
+      - Trains 37 and 38 are not in this transcription. The westlinnhistory.org history gives 62 trips a day
+        (31 each way, matching train numbers 1-62), so check the card for them.
+      - The westlinnhistory.org history confirms service from 6:00 am until midnight.
+
+sources:
+  west-linn: >-
+    West Linn history, "West Linn's Railroad: Willamette Falls Railway",
+    https://www.westlinnhistory.org/history/west-linns-railroad-willamette-falls-railway (Southern Pacific from 1915;
+    62 trips a day, 6:00 am to midnight; passenger service ended 1930, logging 1933;
+    opened 1894; passenger service extended to Magone's Park 1911; bought by the Portland,
+    Eugene & Eastern 8 Nov 1912 and extended to Walling for log rafts; log-dump spur from Junction).
+  surveys: >-
+    Southern Pacific Company, Right of Way and Track Map, Willamette Falls Branch – Walling to
+    Tualatin River, Portland Division, Clackamas County; valuation section V-9, sheets 1–4,
+    recorded as Clackamas County survey SN1913-014. Route and stations traced by Anthony Blackham.

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Basemap zoom sheet</title>
+<!-- Dev tool: one spot at every zoom level, to check a style at all scales.
+     ?style=pioneer&center=-122.605,45.357&railway=wvs&from=6&to=17&building=a9c3b5,0.85 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.css">
+<style>
+  body { margin: 0; background: #ddd; font: 12px system-ui, sans-serif; }
+  #grid { display: grid; grid-template-columns: repeat(2, 390px); gap: 4px; padding: 4px; }
+  .cell { position: relative; width: 390px; height: 330px; background: #fff; }
+  .cell div.map { position: absolute; inset: 0; }
+  .cell b { position: absolute; top: 4px; left: 4px; z-index: 2; background: #fff; padding: 1px 6px; border-radius: 3px; }
+  .maplibregl-ctrl-attrib { display: none; }
+</style>
+</head>
+<body>
+<div id="grid"></div>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.js"></script>
+<script type="module">
+const q = new URLSearchParams(location.search);
+const style = `../styles/${q.get("style") ?? "pioneer"}.json`;
+const center = (q.get("center") ?? "-122.605,45.357").split(",").map(Number);
+const from = +(q.get("from") ?? 6), to = +(q.get("to") ?? 17);
+const railway = q.get("railway") ?? "wvs";
+
+// The style's relative sprite URL assumes the site root, so fix it up for this subfolder.
+const s = await (await fetch(style)).json();
+if (s.sprite && !/^https?:/.test(s.sprite)) s.sprite = new URL(`../${s.sprite}`, location.href).href;
+if (s.glyphs && !/^https?:/.test(s.glyphs)) s.glyphs = new URL(`../${s.glyphs}`, location.href).href.replace(/%7B/g, "{").replace(/%7D/g, "}");
+for (const src of Object.values(s.sources)) {
+  if (typeof src.data === "string" && !/^https?:/.test(src.data)) src.data = new URL(`../${src.data}`, location.href).href;
+}
+const data = await (await fetch(`../data/${railway}.json`)).json();
+// &building=rrggbb[,opacity] tries another building colour without touching the style.
+if (q.has("building")) {
+  const [col, op] = q.get("building").split(",");
+  const b = s.layers.find(l => l.id === "building");
+  b.paint["fill-color"] = `#${col}`;
+  b.paint["fill-outline-color"] = `#${col}`;
+  if (op) b.paint["fill-opacity"] = +op;
+}
+
+for (let z = from; z <= to; z++) {
+  const cell = document.createElement("div");
+  cell.className = "cell";
+  cell.innerHTML = `<b>z${z}</b><div class="map"></div>`;
+  document.getElementById("grid").append(cell);
+  const map = (window.maps ??= {})[z] = new maplibregl.Map({ container: cell.querySelector(".map"), style: structuredClone(s),
+    center, zoom: z, interactive: false, attributionControl: false });
+  map.on("load", () => {
+    // Draw the historic line the way the viewer does: rail with cross-ties.
+    map.addSource("track", { type: "geojson", data: { type: "Feature", geometry: { type: "LineString", coordinates: data.track } } });
+    map.addLayer({ id: "track-casing", type: "line", source: "track",
+      paint: { "line-color": "#f6f1e6", "line-opacity": 0.8, "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 15, 16] } });
+    map.addLayer({ id: "track-ties", type: "line", source: "track", minzoom: 11,
+      paint: { "line-color": "#8b2e1f", "line-width": ["interpolate", ["linear"], ["zoom"], 11, 6, 15, 13], "line-dasharray": [0.18, 1.6] } });
+    map.addLayer({ id: "track", type: "line", source: "track",
+      paint: { "line-color": "#8b2e1f", "line-width": ["interpolate", ["linear"], ["zoom"], 9, 2, 15, 3.5] } });
+  });
+}
+</script>
+</body>
+</html>

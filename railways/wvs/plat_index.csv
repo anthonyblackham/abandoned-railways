@@ -1,0 +1,84 @@
+line,feature,type,station,milepost,sheet,revision,notes
+wvs,Begin,begin,0,,WVS-1,,"beginning of track at Main and 15th; 0+00 assumed, not printed"
+wvs,Buena Vista,station,38+73,,WVS-1,,
+wvs,Bridge 2,bridge,37+88,,WVS-1,,begin
+wvs,Bridge 2,bridge,38+33,,WVS-1,,end
+wvs,Bridge 3,bridge,50+32,,WVS-1,,begin
+wvs,Bridge 3,bridge,51+93.7,,WVS-1,,end
+wvs,Bridge 4,bridge,57+96.5,,WVS-1,,begin
+wvs,Bridge 4,bridge,65+31.5,,WVS-1,,end
+wvs,Collis,station,65+98,,WVS-1,,
+wvs,Campine,station,89+00,,WVS-2,,
+wvs,McBain,station,110+12,,WVS-2,,
+wvs,Maple Lane,station,179+96,,WVS-3,,
+wvs,Robbins,station,198+42,,WVS-4,,
+wvs,Glen Oak,station,247+00,,WVS-4,,
+wvs,Swift,station,277+88,,WVS-5,,
+wvs,Bridge 6,bridge,301+62.5,,WVS-5,,begin
+wvs,Bridge 6,bridge,304+16.5,,WVS-5,,end
+wvs,Eby,station,321+07.8,,WVS-6,,
+wvs,Bridge 7,bridge,327+27.8,,WVS-6,,begin
+wvs,Bridge 7,bridge,328+01.8,,WVS-6,,end
+wvs,Bridge 8,bridge,334+67.8,,WVS-6,,begin
+wvs,Bridge 8,bridge,335+41.8,,WVS-6,,end
+wvs,Beaver Creek,station,365+79,,WVS-6,,
+wvs,Bridge 9,bridge,367+29.4,,WVS-6,,begin
+wvs,Bridge 9,bridge,370+43,,WVS-7,,end
+wvs,Ingram,station,444+64,,WVS-8,,
+wvs,Spangler,station,487+92.5,,WVS-8,,
+wvs,Lewis,station,512+58,,WVS-9,,
+wvs,Bridge 13,bridge,530+89.9,,WVS-9,,begin
+wvs,Bridge 13,bridge,536+13.4,,WVS-9,,end
+wvs,Bridge 14,bridge,552+62.8,,WVS-10,,end
+wvs,Bridge 15,bridge,563+43.5,,WVS-10,,begin
+wvs,Bridge 15,bridge,567+44.6,,WVS-10,,end
+wvs,Bridge 15.5,bridge,597+87.1,,WVS-10,,begin
+wvs,Bridge 15.5,bridge,598+91.1,,WVS-10,,end
+wvs,Bridge 16,bridge,620+56.1,,WVS-10,,begin
+wvs,Bridge 16,bridge,622+35.3,,WVS-10,,end
+wvs,Bridge 17,bridge,636+26,,WVS-10,,begin
+wvs,Bridge 17,bridge,637+45.3,,WVS-10,,end
+wvs,Buckner,station,638+26.8,,WVS-10,,
+wvs,Bridge 18,bridge,643+73.1,,WVS-10,,begin
+wvs,Bridge 18,bridge,647+34.2,,WVS-10,,end
+wvs,Howard,station,712+00,,WVS-12,,
+wvs,Bridge 19,bridge,719+75.6,,WVS-12,,begin
+wvs,Bridge 19,bridge,727+56.5,,WVS-12,,end
+wvs,Mulino,station,741+30,,WVS-12,,
+wvs,Bridge 20,bridge,780+61.9,,WVS-13,,begin
+wvs,Bridge 20,bridge,788+68,,WVS-13,,end
+wvs,North Liberal,station,837+06,,WVS-14,,
+wvs,Liberal,station,869+20,,WVS-14,,
+wvs,Huntley,station,905+05,,WVS-15,,
+wvs,Richard,station,959+60,,WVS-16,,
+wvs,Molalla,station,1013+34,,WVS-17,,
+wvs,Bridge 24,bridge,1047+53.8,,WVS-17,,begin
+wvs,Bridge 24,bridge,1048+87.8,,WVS-17,,end
+wvs,Kaylor,station,1059+23,,WVS-17,,warehouse and office at logging junction
+wvs,End of Track,end,1083+44,,WVS-18,,"end of track Feb 1931, Hwy 213"
+wvs,Ogle,station,1139+52,,WVS-19,,
+wvs,Hitchman,station,1192+76,,WVS-20,,
+wvs,Yoder,station,1273+70,,WVS-22,,
+wvs,Bridge 29,bridge,1315+76.5,,WVS-22,,begin
+wvs,Bridge 29,bridge,1324+30,,WVS-22,,end
+wvs,Busch,station,1336+75,,WVS-22,,
+wvs,Bridge 30,bridge,1366+82.8,,WVS-23,,begin
+wvs,Bridge 30,bridge,1370+41.8,,WVS-23,,end
+wvs,Wilda,station,1394+00,,WVS-23,,
+wvs,Harding,station,1420+41,,WVS-24,,
+wvs,Bridge 31,bridge,1460+54.6,,WVS-25,,begin
+wvs,Bridge 31,bridge,1461+58.3,,WVS-25,,end
+wvs,Bridge 32,bridge,1470+69.3,,WVS-26,,begin
+wvs,Bridge 32,bridge,1472+03.1,,WVS-26,,end
+wvs,Bridge 33,bridge,1488+02.7,,WVS-26,,begin
+wvs,Bridge 33,bridge,1495+97.4,,WVS-26,,end
+wvs,Monitor,station,1499+63,,WVS-26,,
+wvs,Bridge 34,bridge,1546+50.8,,WVS-27,,begin
+wvs,Bridge 34,bridge,1547+40,,WVS-27,,end
+wvs,Dominic Road,crossing,1568+13,,WVS-28,,road crossing north of the station
+wvs,Dominic,station,1569+16,,WVS-28,,
+wvs,Bridge 35,bridge,1601+39,,WVS-28,,begin
+wvs,Bridge 35,bridge,1604+38.2,,WVS-28,,end
+wvs,Berning,station,1632+73,,WVS-28,,
+wvs,College,station,1653+27,,WVS-29,,
+wvs,End of Line,end,1675+20.3,,WVS-29,,end of line

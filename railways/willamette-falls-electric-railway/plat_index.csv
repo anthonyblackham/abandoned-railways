@@ -1,0 +1,8 @@
+line,feature,type,station,milepost,sheet,revision,notes,series
+willamette-falls-electric-railway,Tualatin River,station,170+23.5,7.4,,,confidence A,tualatin
+willamette-falls-electric-railway,Willamette,station,133+27.5,6.7,,,confidence A,tualatin
+willamette-falls-electric-railway,Junction,station,38+23.5,4.9,,,confidence A,tualatin
+willamette-falls-electric-railway,West Linn,station,1+27.5,4.2,,,confidence A,branch
+willamette-falls-electric-railway,Bolton,station,56+89.3,3.1,,,confidence B,branch
+willamette-falls-electric-railway,Magoon,station,72+73.3,2.8,,,confidence B,branch
+willamette-falls-electric-railway,Walling,station,214+45,0.1,,,confidence C; freight only,branch

@@ -75,7 +75,7 @@ def gtfs(rw, era):
         trips.append([feed, feed, trip_id, t.stops[-1].station.name, t.number, t.direction, shape_id])
         for seq, s in enumerate(t.stops, 1):
             flag = 0 if s.regular else 3
-            stop_times.append([trip_id, hhmmss(s.time), hhmmss(s.time), s.station.id, seq, flag, flag,
+            stop_times.append([trip_id, hhmmss(s.time), hhmmss(s.leaves), s.station.id, seq, flag, flag,
                                f"{abs(s.station.measure - start):.1f}", 1 if s.kind == "printed" else 0])
 
     feed_info = [[PUBLISHER, SITE_URL, "en", SERVICE_START, SERVICE_END, era.id, CONTACT_URL]]
@@ -152,12 +152,15 @@ def web(rw):
         "name": m["name"],
         "colour": m.get("colour", "#444444"),
         "timezone": m["timezone"],
-        "opened": str(m.get("opened", "")),
-        "closed": str(m.get("closed", "")),
+        "opened": str(m.get("opened") or ""),
+        "closed": str(m.get("closed") or ""),
         "bbox": [min(lons), min(lats), max(lons), max(lats)],
+        "overlays": m.get("overlays", []),
         "track": [[round(x, 6), round(y, 6)] for x, y in rw.track.coords],
         "trackMeasures": [round(v, 1) for v in rw.track.measures],
-        "stations": [{"id": s.id, "name": s.name, "lon": s.lon, "lat": s.lat, "m": round(s.measure, 1)}
+        "stations": [{"id": s.id, "name": s.name, "lon": s.lon, "lat": s.lat, "m": round(s.measure, 1),
+                      **({"plat": s.plat_station} if s.plat_station else {}),
+                      **({"note": s.note} if s.note else {})}
                      for s in stations],
         "eras": [{
             "id": e.id,
@@ -170,8 +173,9 @@ def web(rw):
                 "number": t.number,
                 "direction": t.direction,
                 "headsign": t.stops[-1].station.name,
-                # [station index, seconds, flag stop, time kind]
-                "stops": [[index[s.station.id], s.time, 0 if s.regular else 1, s.kind[0]] for s in t.stops],
+                # [station index, arrive, flag stop, time kind, leave]
+                "stops": [[index[s.station.id], s.time, 0 if s.regular else 1, s.kind[0], s.leaves]
+                          for s in t.stops],
             } for t in sorted(e.trips, key=lambda t: t.stops[0].time)],
             "mileposts": mileposts(rw, e),
         } for e in rw.eras],
@@ -186,5 +190,8 @@ def write(rw, out):
     data = web(rw)
     (out / "data" / f"{rw.id}.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")),
                                                 encoding="utf8")
+    eras = [e["id"] for e in data["eras"]]
+    featured = str(rw.meta.get("featured", eras[0] if eras else ""))
     return {k: data[k] for k in ("id", "name", "colour", "opened", "closed", "bbox")} | {
+        "featured": featured,   # the era the network map runs for this line
         "eras": [{"id": e["id"], "label": e["label"]} for e in data["eras"]]}

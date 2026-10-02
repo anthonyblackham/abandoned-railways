@@ -1,11 +1,13 @@
 """python -m pipeline [railway ...] [--out dist]
 
-Checks and builds every railway under railways/ (or just the ones named).
+Checks and builds every railway under railways/ (or just the ones named),
+then copies the viewer from web/ so dist/ is the complete site.
 Errors stop the build; warnings are printed and the build carries on.
 """
 
 import argparse
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -42,6 +44,8 @@ def main():
     if failed:
         sys.exit(1)
     (args.out / "data" / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf8")
+    # The viewer is static files; copying it next to the data makes dist/ the whole site.
+    shutil.copytree(ROOT / "web", args.out, dirs_exist_ok=True)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,9 @@
+{"type":"FeatureCollection","features":[
+{"type": "Feature", "properties": {"id": "tualatin-river", "name": "Tualatin River"}, "geometry": {"type": "Point", "coordinates": [-122.669077, 45.345226]}},
+{"type": "Feature", "properties": {"id": "willamette", "name": "Willamette"}, "geometry": {"type": "Point", "coordinates": [-122.655686, 45.344033]}},
+{"type": "Feature", "properties": {"id": "junction", "name": "Junction"}, "geometry": {"type": "Point", "coordinates": [-122.621878, 45.353429]}},
+{"type": "Feature", "properties": {"id": "west-linn", "name": "West Linn"}, "geometry": {"type": "Point", "coordinates": [-122.610562, 45.360719]}},
+{"type": "Feature", "properties": {"id": "bolton", "name": "Bolton"}, "geometry": {"type": "Point", "coordinates": [-122.622431, 45.371892]}},
+{"type": "Feature", "properties": {"id": "magones", "name": "Magones", "aliases": ["Magoon", "Magone's"]}, "geometry": {"type": "Point", "coordinates": [-122.625934, 45.375454]}},
+{"type": "Feature", "properties": {"id": "walling", "name": "Walling", "note": "Freight and log cars only: log rafts were lifted from the river here onto the log cars"}, "geometry": {"type": "Point", "coordinates": [-122.655777, 45.407579]}}
+]}

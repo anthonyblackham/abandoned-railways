@@ -1,0 +1,81 @@
+/* The panel is always dark, framing the parchment map. */
+:root {
+  --paper: #1d1b18;
+  --ink: #ece4d6;
+  --muted: #a0968a;
+  --rule: #3a352f;
+  --accent: #c8553f;
+  --button: #2c2823;
+  --panel-w: 320px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--paper); color: var(--ink); font: 14px/1.45 Georgia, "Times New Roman", serif; }
+
+#map { position: absolute; inset: 0 var(--panel-w) 0 0; }
+#panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: var(--panel-w);
+  overflow-y: auto; padding: 16px 18px; background: var(--paper);
+  border-left: 1px solid var(--rule);
+}
+
+h1 { font-size: 20px; margin: 0; line-height: 1.2; }
+h2 {
+  font: 600 11px/1 system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin: 18px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--rule);
+}
+p { margin: 4px 0; }
+a { color: var(--accent); }
+.muted { color: var(--muted); font-size: 13px; }
+
+.era { display: block; margin-top: 10px; font: 13px system-ui, sans-serif; color: var(--muted); }
+select, button {
+  font: 13px system-ui, sans-serif; color: var(--ink); background: var(--button);
+  border: 1px solid var(--rule); border-radius: 4px; padding: 4px 8px;
+}
+select { margin-left: 6px; }
+button { cursor: pointer; }
+button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.clock { margin-top: 14px; }
+.clock-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.time { font: 600 34px/1 ui-monospace, "Cascadia Mono", Consolas, monospace; font-variant-numeric: tabular-nums; }
+#scrub { width: 100%; margin: 10px 0 6px; accent-color: var(--accent); }
+.controls { display: flex; gap: 6px; }
+
+.list { list-style: none; margin: 0; padding: 0; }
+.list li { padding: 6px 0; border-bottom: 1px dotted var(--rule); cursor: pointer; }
+.list li:last-child { border-bottom: 0; }
+.list .num {
+  display: inline-block; min-width: 26px; padding: 0 5px; margin-right: 6px; text-align: center;
+  font: 600 12px/18px system-ui, sans-serif; color: #fff; background: var(--accent); border-radius: 9px;
+}
+.list .sub { display: block; margin-left: 32px; color: var(--muted); font-size: 12.5px; }
+.list .empty { cursor: default; color: var(--muted); }
+
+#layers label { display: block; font: 13px system-ui, sans-serif; margin: 4px 0; }
+footer { margin-top: 20px; font-size: 12.5px; }
+
+.maplibregl-popup-content { background: var(--paper); color: var(--ink); font: 13px/1.4 Georgia, serif; }
+.maplibregl-popup-tip { border-top-color: var(--paper) !important; border-bottom-color: var(--paper) !important; }
+.popup h3 { margin: 0 0 4px; font-size: 15px; }
+.popup table { border-collapse: collapse; font: 12.5px system-ui, sans-serif; }
+.popup td { padding: 1px 6px 1px 0; }
+.popup .next td { color: var(--accent); font-weight: 600; }
+.popup .est { color: var(--muted); }
+
+@media (max-width: 720px) {
+  #map { inset: 0 0 50% 0; }
+  #panel { top: 50%; width: 100%; border-left: 0; border-top: 1px solid var(--rule); padding: 12px 16px; }
+}
+
+[hidden] { display: none !important; }
+
+.back { margin-bottom: 8px; }
+.list .swatch {
+  display: inline-block; width: 12px; height: 12px; margin: 0 8px 0 2px; border-radius: 50%;
+  border: 2px solid #fff; box-shadow: 0 0 0 1px var(--rule); vertical-align: -1px;
+}
+.list li:has(.swatch) .sub { margin-left: 26px; }
