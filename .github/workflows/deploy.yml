@@ -1,0 +1,73 @@
+# Build the site and GTFS feeds, validate the feeds, and publish to GitHub Pages.
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  GTFS_VALIDATOR: "8.0.1"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Build site and feeds
+        run: python -m pipeline
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Cache the GTFS validator
+        id: validator
+        uses: actions/cache@v4
+        with:
+          path: .tools/gtfs-validator-cli.jar
+          key: gtfs-validator-${{ env.GTFS_VALIDATOR }}
+
+      - name: Download the GTFS validator
+        if: steps.validator.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p .tools
+          curl -sSfL -o .tools/gtfs-validator-cli.jar \
+            "https://github.com/MobilityData/gtfs-validator/releases/download/v${GTFS_VALIDATOR}/gtfs-validator-${GTFS_VALIDATOR}-cli.jar"
+
+      - name: Validate feeds
+        run: python -m pipeline.validate .tools/gtfs-validator-cli.jar
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

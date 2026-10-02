@@ -50,12 +50,15 @@ syncButtons();
 
 // ---- map -------------------------------------------------------------------
 
-// ?basemap=<name> uses one of our styles from styles/; otherwise OpenFreeMap's own.
+// The basemap is our Pioneer-style map; ?basemap=<name> picks another style
+// from styles/, or ?basemap=openfreemap OpenFreeMap's plain one.
 // Our styles keep their sprite and fonts next to the site, and MapLibre wants
 // those as absolute URLs, so they're resolved against this page first.
+const BASEMAP = params.get("basemap") ?? "pioneer";
+const OWN_STYLE = BASEMAP !== "openfreemap";
 async function basemapStyle() {
-  if (!params.has("basemap")) return `https://tiles.openfreemap.org/styles/${dark ? "dark" : "positron"}`;
-  const style = await (await fetch(`styles/${params.get("basemap")}.json`)).json();
+  if (!OWN_STYLE) return `https://tiles.openfreemap.org/styles/${dark ? "dark" : "positron"}`;
+  const style = await (await fetch(`styles/${BASEMAP}.json`)).json();
   const absolute = path => new URL(path, location.href).href.replace(/%7B/g, "{").replace(/%7D/g, "}");
   if (style.sprite && !/^https?:/.test(style.sprite)) style.sprite = absolute(style.sprite);
   if (style.glyphs && !/^https?:/.test(style.glyphs)) style.glyphs = absolute(style.glyphs);
@@ -83,14 +86,14 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-le
 map.addControl(new maplibregl.ScaleControl({ unit: "imperial" }), "bottom-left");
 
 // Our own styles carry their fonts (basemap/make_glyphs.py); OpenFreeMap's carry Noto Sans.
-const FONT = params.has("basemap") ? ["Old Standard TT Regular"] : ["Noto Sans Regular"];
-const FONT_BOLD = params.has("basemap") ? ["Old Standard TT Bold"] : ["Noto Sans Bold"];
+const FONT = OWN_STYLE ? ["Old Standard TT Regular"] : ["Noto Sans Regular"];
+const FONT_BOLD = OWN_STYLE ? ["Old Standard TT Bold"] : ["Noto Sans Bold"];
 // Every historic line is drawn alike, as a railway with cross-ties, so many
 // lines read as one network rather than a rainbow. Each line's own colour
 // marks its trains.
 const HISTORIC = "#8b2e1f";
 // Overlay colours follow the basemap, not the page: custom styles are light.
-const darkMap = dark && !params.has("basemap");
+const darkMap = dark && !OWN_STYLE;
 const ink = darkMap ? "#ece4d6" : "#2a2520";
 const paper = darkMap ? "#1d1b18" : "#f6f1e6";
 const MILEPOST = "#d9822b";
