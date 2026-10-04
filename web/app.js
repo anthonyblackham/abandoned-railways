@@ -96,7 +96,19 @@ const HISTORIC = "#8b2e1f";
 const darkMap = dark && !OWN_STYLE;
 const ink = darkMap ? "#ece4d6" : "#2a2520";
 const paper = darkMap ? "#1d1b18" : "#f6f1e6";
-const MILEPOST = "#d9822b";
+const MILEPOST = "#2f5d45";   // dark green: readable on parchment, distinct from stations
+
+// A filled diamond with an outline, as image data for map.addImage.
+function diamond(size, fill, outline) {
+  const s = size * 2, c = document.createElement("canvas");
+  c.width = c.height = s;
+  const g = c.getContext("2d");
+  g.beginPath();
+  g.moveTo(s / 2, 2); g.lineTo(s - 2, s / 2); g.lineTo(s / 2, s - 2); g.lineTo(2, s / 2); g.closePath();
+  g.fillStyle = fill; g.fill();
+  g.lineWidth = 2.5; g.strokeStyle = outline; g.stroke();
+  return g.getImageData(0, 0, s, s);
+}
 
 const fc = features => ({ type: "FeatureCollection", features });
 const point = (coords, properties = {}) => ({ type: "Feature", properties, geometry: { type: "Point", coordinates: coords } });
@@ -128,14 +140,16 @@ map.on("load", () => {
   map.addSource("mileposts", { type: "geojson", data: fc([]) });
   map.addLayer({ id: "milepost-links", type: "line", source: "mileposts", filter: ["==", ["geometry-type"], "LineString"],
     layout: { visibility: "none" }, paint: { "line-color": MILEPOST, "line-width": 1.5, "line-dasharray": [2, 2] } });
-  map.addLayer({ id: "mileposts", type: "circle", source: "mileposts", filter: ["==", ["geometry-type"], "Point"],
-    layout: { visibility: "none" },
-    paint: { "circle-radius": 4, "circle-color": paper, "circle-stroke-color": MILEPOST, "circle-stroke-width": 2 } });
-  map.addLayer({ id: "milepost-labels", type: "symbol", source: "mileposts", minzoom: 12,
+  // Mileposts are diamonds, the plats' own milepost symbol, drawn here so any basemap works.
+  map.addImage("milepost-diamond", diamond(14, MILEPOST, paper), { pixelRatio: 2 });
+  map.addLayer({ id: "mileposts", type: "symbol", source: "mileposts", filter: ["==", ["geometry-type"], "Point"],
+    layout: { visibility: "none", "icon-image": "milepost-diamond", "icon-allow-overlap": true } });
+  map.addLayer({ id: "milepost-labels", type: "symbol", source: "mileposts", minzoom: 10,
     filter: ["==", ["geometry-type"], "Point"],
-    layout: { visibility: "none", "text-field": ["concat", "MP ", ["get", "mile"]], "text-font": FONT, "text-size": 11,
-      "text-offset": [0, -1.2] },
-    paint: { "text-color": MILEPOST, "text-halo-color": paper, "text-halo-width": 1.5 } });
+    layout: { visibility: "none", "text-field": ["concat", "MP ", ["get", "mile"]], "text-font": FONT_BOLD, "text-size": 12,
+      // Whichever side of the marker is free, so labels clear nearby station names.
+      "text-variable-anchor": ["bottom", "top", "right", "left"], "text-radial-offset": 0.7 },
+    paint: { "text-color": MILEPOST, "text-halo-color": paper, "text-halo-width": 2 } });
 
   map.addSource("stations", { type: "geojson", data: fc([]) });
   // Zoomed out, only regular stops show; flag stops and stations without
@@ -228,7 +242,7 @@ function buildLayerToggles(line) {
   const era = line.engine.era(line.era);
   const groups = (line.data.overlays ?? []).map(o => ({ label: o.label, layers: [`${line.id}:${o.id}`] }));
   if (era.mileposts?.length) {
-    groups.push({ label: "Timetable mileposts (nominal)", layers: ["mileposts", "milepost-links", "milepost-labels"] });
+    groups.push({ label: "Mileposts", layers: ["mileposts", "milepost-links", "milepost-labels"] });
   }
   for (const g of groups) {
     const box = el("input", { type: "checkbox" });
@@ -239,14 +253,8 @@ function buildLayerToggles(line) {
   }
   if (!groups.length) $("layers").append(el("p", { className: "muted", textContent: "No extra layers for this line." }));
 
-  const stations = Object.fromEntries(line.engine.stations.map(s => [s.id, s]));
-  const mp = [];
-  for (const p of era.mileposts ?? []) {
-    const s = stations[p.station];
-    mp.push(point([p.lon, p.lat], { mile: p.mile.toFixed(1) }));
-    mp.push({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: [[s.lon, s.lat], [p.lon, p.lat]] } });
-  }
-  map.getSource("mileposts").setData(fc(mp));
+  // Whole-mile markers along the track (MP 0, MP 1, ...).
+  map.getSource("mileposts").setData(fc((era.mileposts ?? []).map(p => point([p.lon, p.lat], { mile: String(p.mile) }))));
   $("source").textContent = `Timetable: ${era.source}`;
   $("feed").href = era.feed;
 }
@@ -262,7 +270,7 @@ function drawStations() {
     }
     l.engine.stations.forEach((s, i) => {
       features.push(point([s.lon, s.lat], { line: l.id, index: i, name: s.name, served: served.has(i),
-        regular: served.get(i) ?? false, plat: s.plat ?? "", note: s.note ?? "" }));
+        regular: served.get(i) ?? false, plat: s.plat ?? "", mp: s.mp ?? "", note: s.note ?? "" }));
     });
   }
   map.getSource("stations").setData(fc(features));
@@ -380,7 +388,7 @@ function wirePopups() {
     popup.setLngLat(f.geometry.coordinates).setHTML(
       `<div class="popup"><h3>${f.properties.name}</h3>` +
       `<p class="muted">${l.data.name} · ${f.properties.regular ? "regular stop" : "flag stop"}` +
-      `${f.properties.plat ? ` · plat Sta ${f.properties.plat}` : ""}</p>` +
+      `${f.properties.plat ? ` · plat Sta ${f.properties.plat}` : ""}${f.properties.mp ? ` · MP ${f.properties.mp}` : ""}</p>` +
       `<table>${rows}</table></div>`).addTo(map);
   });
 

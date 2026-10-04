@@ -31,13 +31,15 @@ A `mile` column is optional and kept as printed. Old mileposts rarely match real
 |---|---|---|
 | `line` | `wvs` | the railway id |
 | `feature` | `Kaylor` | the name as spelled on the plat |
-| `type` | `station` | station, junction, spur, bridge, crossing, equation… (blank = station) |
+| `type` | `station` | station, milepost, junction, spur, bridge, crossing, equation… (blank = station) |
 | `station` | `1059+23` | engineering station as written (105,923 ft); for an equation, `1250+00 back = 1248+62 ahead` |
 | `milepost` | | only if the plat shows one |
 | `sheet` | | plat sheet number |
 | `revision` | | plat date or revision, since variants disagree |
 | `notes` | | anything else |
 | `series` | | optional: which stationing series, when a line was surveyed in pieces (stationing may count in either direction) |
+
+The Mileposts layer shows whole-mile markers (MP 0, MP 1, …). A `milepost` row (e.g. `MP 3`, station `62+40`, milepost `3`) places that marker by its engineering station, between stations of the same series whose stationing is known; other miles are interpolated between stations that carry mileposts (from the timetable, or the plat index's `milepost` column).
 
 When sources disagree about where a station stood, the plat wins: the build compares the gap between neighbouring plat stations in the same series with the gap along the traced track, and warns if they differ by more than 0.05 mi. Station equations are recorded but not yet applied.
 

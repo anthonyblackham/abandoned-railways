@@ -1,8 +1,16 @@
 line,feature,type,station,milepost,sheet,revision,notes,series
-willamette-falls-electric-railway,Tualatin River,station,170+23.5,7.4,,,confidence A,tualatin
-willamette-falls-electric-railway,Willamette,station,133+27.5,6.7,,,confidence A,tualatin
-willamette-falls-electric-railway,Junction,station,38+23.5,4.9,,,confidence A,tualatin
-willamette-falls-electric-railway,West Linn,station,1+27.5,4.2,,,confidence A,branch
-willamette-falls-electric-railway,Bolton,station,56+89.3,3.1,,,confidence B,branch
-willamette-falls-electric-railway,Magoon,station,72+73.3,2.8,,,confidence B,branch
-willamette-falls-electric-railway,Walling,station,214+45,0.1,,,confidence C; freight only,branch
+willamette-falls-electric-railway,Tualatin River,station,170+23.5,7.4,V9-4,,confidence A,tualatin
+willamette-falls-electric-railway,Willamette,station,133+27.5,6.7,V9-4,,confidence A,tualatin
+willamette-falls-electric-railway,Junction,station,38+23.5,4.9,V9-3,,confidence A,tualatin
+willamette-falls-electric-railway,West Linn,station,1+27.5,4.2,V9-2,,confidence A,branch
+willamette-falls-electric-railway,Bolton,station,56+89.3,3.1,V9-2,,confidence B,branch
+willamette-falls-electric-railway,Magoon,station,72+73.3,2.8,V9-2,,confidence B,branch
+willamette-falls-electric-railway,Walling,station,214+45,0.1,V9-1,,confidence C; freight only,branch
+willamette-falls-electric-railway,MP 0,milepost,219+73.0,0,V9-1,,,branch
+willamette-falls-electric-railway,MP 1,milepost,166+93.0,1,V9-1,,,branch
+willamette-falls-electric-railway,MP 2,milepost,114+13.0,2,V9-1,,,branch
+willamette-falls-electric-railway,MP 3,milepost,62+17.3,3,V9-2,,,branch
+willamette-falls-electric-railway,MP 4,milepost,9+28.5,4,V9-2,,,branch
+willamette-falls-electric-railway,MP 5,milepost,43+51.5,5,V9-3,,,tualatin
+willamette-falls-electric-railway,MP 6,milepost,96+31.5,6,,,sheet not recorded,tualatin
+willamette-falls-electric-railway,MP 7,milepost,149+11.5,7,V9-4,,,tualatin

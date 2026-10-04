@@ -40,6 +40,7 @@ class Station:
     offset: float = 0.0    # metres off the track
     plat_station: str | None = None   # engineering station off the plat, e.g. "1059+23"
     plat_series: str = ""             # which stationing series it belongs to
+    plat_milepost: str = ""           # milepost printed on the plat, if any
     note: str = ""                    # e.g. "Freight and log cars only"
 
 
@@ -189,6 +190,7 @@ def read_plat_index(path, railway_id, by_name, report):
             else:
                 s.plat_station = r["station"]
                 s.plat_series = r.get("series", "")
+                s.plat_milepost = r.get("milepost", "")
     return rows
 
 

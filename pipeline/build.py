@@ -3,10 +3,12 @@
 import csv
 import io
 import json
+import math
 import zipfile
 
 from .geo import haversine
 
+END_SLACK_METRES = 50   # a milepost this close past the end of the trace still shows
 SITE_URL = "https://anthonyblackham.com/abandoned-railways/"
 PUBLISHER = "Abandoned Railways"
 CONTACT_URL = "https://github.com/anthonyblackham/abandoned-railways/issues"
@@ -105,38 +107,88 @@ def gtfs(rw, era):
 
 
 def mileposts(rw, era):
-    """Place each printed milepost on the track (linear referencing).
+    """Whole-mile markers (MP 0, MP 1, ...) along the track.
 
-    Calibration points pin a printed mile to a station's real position; the
-    scale is stretched piecewise between them. Without any, the two furthest
-    apart stations that carry a milepost are used.
+    Mileposts come from the timetable when it prints them, otherwise from the
+    plat index. Each station with a milepost pins that mile to the station's
+    real position, and whole miles are interpolated between neighbouring
+    stations (linear referencing), so the markers follow the railway's own
+    numbering stretch by stretch. A railway.yaml era can give explicit
+    calibration points instead.
     """
+    by_name = {}
+    for st in rw.stations.values():
+        for n in (st.name, *st.aliases):
+            by_name[n.casefold()] = st
     miles = {}
     for t in era.trips:
         for s in t.stops:
             if s.mile is not None:
                 miles[s.station.id] = (s.station, s.mile)
     if len(miles) < 2:
-        return []
-    by_name = {st.name.casefold(): st for st in rw.stations.values()}
+        miles = {}
+        for row in rw.plat_index:
+            st = by_name.get(row["feature"].casefold())
+            if st and (row["type"].lower() or "station") == "station" and row.get("milepost"):
+                miles[st.id] = (st, float(row["milepost"]))
+    stationed = stationed_mileposts(rw)
+    if len(miles) < 2:
+        return stationed
     if era.calibration:
         cal = [(c["mile"], by_name[c["station"].casefold()].measure) for c in era.calibration]
     else:
-        ends = sorted(miles.values(), key=lambda sm: sm[1])
-        cal = [(ends[0][1], ends[0][0].measure), (ends[-1][1], ends[-1][0].measure)]
-    cal.sort()
+        cal = [(mile, st.measure) for st, mile in miles.values()]
+    cal = sorted(set(cal))
 
     def measure_at(mile):
         i = 1
         while i < len(cal) - 1 and mile > cal[i][0]:
             i += 1
         (m0, x0), (m1, x1) = cal[i - 1], cal[i]
-        return x0 + (mile - m0) * (x1 - x0) / (m1 - m0)
+        return x0 + (mile - m0) * (x1 - x0) / (m1 - m0) if m1 != m0 else x0
 
     out = []
-    for station, mile in sorted(miles.values(), key=lambda sm: sm[1]):
-        lon, lat = rw.track.interpolate(measure_at(mile))
-        out.append({"station": station.id, "mile": mile, "lon": round(lon, 6), "lat": round(lat, 6)})
+    exact = {m["mile"] for m in stationed}
+    # Only between the outermost known mileposts: no guessing past the ends.
+    for mile in range(math.ceil(cal[0][0]), math.floor(cal[-1][0]) + 1):
+        if mile in exact:
+            continue
+        m = measure_at(mile)
+        # Only where the traced track reaches, with a little slack at the ends.
+        if -END_SLACK_METRES <= m <= rw.track.length + END_SLACK_METRES:
+            lon, lat = rw.track.interpolate(m)
+            out.append({"mile": mile, "lon": round(lon, 6), "lat": round(lat, 6)})
+    return sorted(out + stationed, key=lambda m: m["mile"])
+
+
+def stationed_mileposts(rw):
+    """Mileposts the plat index places by engineering station.
+
+    Within a stationing series, stations with known plat stationing tie
+    station values to positions on the traced track; a milepost row is
+    placed between them by its own station value.
+    """
+    from .load import parse_plat_station
+    series = {}
+    for st in rw.stations.values():
+        if st.plat_station:
+            series.setdefault(st.plat_series, []).append((parse_plat_station(st.plat_station), st.measure))
+    out = []
+    for row in rw.plat_index:
+        if row["type"].lower() != "milepost" or not row["station"] or not row.get("milepost"):
+            continue
+        cal = sorted(series.get(row.get("series", ""), []))
+        if len(cal) < 2:
+            continue
+        sta = parse_plat_station(row["station"])
+        i = 1
+        while i < len(cal) - 1 and sta > cal[i][0]:
+            i += 1
+        (s0, m0), (s1, m1) = cal[i - 1], cal[i]
+        m = m0 + (sta - s0) * (m1 - m0) / (s1 - s0)
+        lon, lat = rw.track.interpolate(m)
+        out.append({"mile": round(float(row["milepost"])), "lon": round(lon, 6), "lat": round(lat, 6),
+                    "station": row["station"]})
     return out
 
 
@@ -160,6 +212,7 @@ def web(rw):
         "trackMeasures": [round(v, 1) for v in rw.track.measures],
         "stations": [{"id": s.id, "name": s.name, "lon": s.lon, "lat": s.lat, "m": round(s.measure, 1),
                       **({"plat": s.plat_station} if s.plat_station else {}),
+                      **({"mp": s.plat_milepost} if s.plat_milepost else {}),
                       **({"note": s.note} if s.note else {})}
                      for s in stations],
         "eras": [{
