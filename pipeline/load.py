@@ -12,7 +12,7 @@ from .geo import METRES_PER_MILE, Line
 
 SNAP_WARN_METRES = 50
 PLAT_WARN_METRES = 0.05 * METRES_PER_MILE   # per gap between neighbouring stations
-SPEED_RANGE_MPH = (5, 60)
+SPEED_RANGE_MPH = (3, 60)   # slow street running and terminal approaches are real
 TIME_RE = re.compile(r"^(~?)(\d{1,2}):(\d{2})$")
 PLAT_STATION_RE = re.compile(r"^(\d+)(?:\+(\d+(?:\.\d+)?))?$")   # "1059+23", or a bare "0"
 METRES_PER_FOOT = 0.3048
@@ -312,7 +312,8 @@ def estimate_times(trip):
         span = b.station.measure - a.station.measure
         for s in trip.stops[i0 + 1:i1]:
             u = (s.station.measure - a.station.measure) / span if span else 0
-            s.time = round((a.leaves + u * (b.time - a.leaves)) / 60) * 60
+            # Kept to the second: close flag stops would collide if rounded to minutes.
+            s.time = round(a.leaves + u * (b.time - a.leaves))
 
 
 def check_speeds(era, trip, report):

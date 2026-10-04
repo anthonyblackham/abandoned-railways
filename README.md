@@ -50,7 +50,7 @@ pip install -r requirements.txt
 python -m pipeline            # or: python -m pipeline wvs
 ```
 
-This checks every railway and writes `dist/feeds/<railway>-<era>.zip` (GTFS) and `dist/data/<railway>.json` for the viewer. Errors stop the build: unknown station names, unreadable times, times running backwards, or stations out of order along the track. Warnings are printed and the build carries on: stations more than 50 m off the track, or implied speeds between stations outside 5–60 mph.
+This checks every railway and writes `dist/feeds/<railway>-<era>.zip` (GTFS) and `dist/data/<railway>.json` for the viewer. Errors stop the build: unknown station names, unreadable times, times running backwards, or stations out of order along the track. Warnings are printed and the build carries on: stations more than 50 m off the track, or implied speeds between stations outside 3–60 mph.
 
 Each feed's calendar runs from 2000 to 2099, so any GTFS tool shows the trains running today.
 

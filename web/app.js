@@ -174,7 +174,9 @@ map.on("load", () => {
   map.addLayer({ id: "trains", type: "circle", source: "trains",
     paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 9, 7, 15, 12], "circle-color": ["get", "colour"],
       "circle-stroke-color": "#fff", "circle-stroke-width": 2.5 } });
+  // Train numbers fit on the dot; longer labels (e.g. departure times) stay in the panel and popup.
   map.addLayer({ id: "train-labels", type: "symbol", source: "trains",
+    filter: ["<=", ["length", ["get", "number"]], 3],
     layout: { "text-field": ["get", "number"], "text-font": FONT_BOLD, "text-size": 11, "text-allow-overlap": true,
       "text-ignore-placement": true },
     paint: { "text-color": "#fff" } });

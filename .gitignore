@@ -3,3 +3,6 @@ __pycache__/
 node_modules/
 dist/
 .tools/
+
+# Local pilots built on others' unpublished data.
+railways/oregon-city-line/
