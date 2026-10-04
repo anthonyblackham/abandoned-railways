@@ -25,26 +25,34 @@ export class Railway {
   constructor(data) {
     this.data = data;
     this.stations = data.stations;
-    this.track = data.track;
-    this.measures = data.trackMeasures;
+    // A line can have several routes (branches); each trip names the one it runs on.
+    this.routes = Object.fromEntries((data.routes ?? [{ id: "main", track: data.track, measures: data.trackMeasures }])
+      .map(r => [r.id, r]));
+    this.mainRoute = (data.routes ?? [{ id: "main" }])[0].id;
+  }
+
+  // Metres along a route for a station.
+  #m(stationIndex, route) {
+    const s = this.stations[stationIndex];
+    return s.on?.[route] ?? s.m;
   }
 
   era(id) {
     return this.data.eras.find(e => e.id === id) ?? this.data.eras[0];
   }
 
-  // [lng, lat] at `m` metres along the track.
-  pointAt(m) {
-    const ms = this.measures;
+  // [lng, lat] at `m` metres along a route (the main one by default).
+  pointAt(m, route = this.mainRoute) {
+    const { track, measures: ms } = this.routes[route] ?? this.routes[this.mainRoute];
     let lo = 0, hi = ms.length - 1;
-    if (m <= 0) return this.track[0];
-    if (m >= ms[hi]) return this.track[hi];
+    if (m <= 0) return track[0];
+    if (m >= ms[hi]) return track[hi];
     while (hi - lo > 1) {
       const mid = (lo + hi) >> 1;
       if (ms[mid] <= m) lo = mid; else hi = mid;
     }
     const u = (m - ms[lo]) / (ms[hi] - ms[lo] || 1);
-    const a = this.track[lo], b = this.track[hi];
+    const a = track[lo], b = track[hi];
     return [a[0] + u * (b[0] - a[0]), a[1] + u * (b[1] - a[1])];
   }
 
@@ -97,7 +105,8 @@ export class Railway {
     let i = 0;
     while (i < stops.length - 2 && stops[i + 1][1] <= t) i++;
     const a = stops[i], b = stops[i + 1];
-    const ma = this.stations[a[0]].m, mb = this.stations[b[0]].m;
+    const route = trip.route ?? this.mainRoute;
+    const ma = this.#m(a[0], route), mb = this.#m(b[0], route);
     let m, waiting = false;
     if (t <= leave(a)) {
       // Standing at the station until its leave time.
@@ -113,7 +122,7 @@ export class Railway {
       trip,
       measure: m,
       waiting,
-      lngLat: this.pointAt(m),
+      lngLat: this.pointAt(m, route),
       previous: { station: this.stations[a[0]], time: leave(a) },
       next: { station: this.stations[b[0]], time: b[1] },
     };

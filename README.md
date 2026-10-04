@@ -7,7 +7,7 @@ Each railway lives in `railways/<id>/`:
 | File | What it holds |
 |---|---|
 | `railway.yaml` | Name, dates, timezone, colour, eras and sources |
-| `track.geojson` | The traced line |
+| `track.geojson` | The traced line: one LineString, or several with `id`s for a line with branches (each trip runs on the route its stations lie on) |
 | `stations.geojson` | Stations, named as the timetables spell them; other spellings (plats, maps) go in `aliases` |
 | `timetables/<era>-<direction>.csv` | The printed timetable as a grid: stations down, train numbers across, 24-hour times |
 

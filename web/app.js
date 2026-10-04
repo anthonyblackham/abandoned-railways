@@ -125,8 +125,10 @@ map.on("load", () => {
     }
   }
 
-  map.addSource("tracks", { type: "geojson", data: fc(lines.map(l => ({
-    type: "Feature", properties: { line: l.id }, geometry: { type: "LineString", coordinates: l.data.track } }))) });
+  // Every route of every line (branches are separate routes over shared track).
+  map.addSource("tracks", { type: "geojson", data: fc(lines.flatMap(l =>
+    (l.data.routes ?? [{ track: l.data.track }]).map(r => ({
+      type: "Feature", properties: { line: l.id }, geometry: { type: "LineString", coordinates: r.track } })))) });
   map.addLayer({ id: "track-casing", type: "line", source: "tracks", layout: { "line-cap": "round", "line-join": "round" },
     paint: { "line-color": paper, "line-opacity": 0.8, "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 15, 16] } });
   map.addLayer({ id: "track-ties", type: "line", source: "tracks", minzoom: 11,

@@ -39,12 +39,13 @@ def era_ids(rw, era):
 
 
 def shape_for(rw, era, trip):
-    """Each era and direction gets one shape, spanning the furthest stops any trip reaches."""
-    trips = [t for t in era.trips if t.direction == trip.direction]
-    ms = [s.station.measure for t in trips for s in t.stops]
+    """Each era, route and direction gets one shape, spanning the furthest stops any trip reaches."""
+    trips = [t for t in era.trips if t.route == trip.route and t.direction == trip.direction]
+    ms = [t.m(s) for t in trips for s in t.stops]
     lo, hi = min(ms), max(ms)
     start, end = (lo, hi) if trip.direction == 0 else (hi, lo)
-    return f"{era_ids(rw, era)}-{trip.direction}", start, end
+    route = f"{trip.route}-" if len(rw.routes) > 1 else ""
+    return f"{era_ids(rw, era)}-{route}{trip.direction}", start, end
 
 
 def gtfs(rw, era):
@@ -66,7 +67,7 @@ def gtfs(rw, era):
     for t in era.trips:
         shape_id, start, end = shape_for(rw, era, t)
         if shape_id not in shapes:
-            pts = rw.track.slice(start, end)
+            pts = rw.routes[t.route].slice(start, end)
             dist, rows = 0.0, []
             for i, p in enumerate(pts):
                 if i:
@@ -78,7 +79,7 @@ def gtfs(rw, era):
         for seq, s in enumerate(t.stops, 1):
             flag = 0 if s.regular else 3
             stop_times.append([trip_id, hhmmss(s.time), hhmmss(s.leaves), s.station.id, seq, flag, flag,
-                               f"{abs(s.station.measure - start):.1f}", 1 if s.kind == "printed" else 0])
+                               f"{abs(t.m(s) - start):.1f}", 1 if s.kind == "printed" else 0])
 
     feed_info = [[PUBLISHER, SITE_URL, "en", SERVICE_START, SERVICE_END, era.id, CONTACT_URL]]
 
@@ -197,8 +198,9 @@ def web(rw):
     m = rw.meta
     stations = sorted(rw.stations.values(), key=lambda s: s.measure)
     index = {s.id: i for i, s in enumerate(stations)}
-    lons = [c[0] for c in rw.track.coords]
-    lats = [c[1] for c in rw.track.coords]
+    from .load import ROUTE_SNAP_METRES
+    lons = [c[0] for line in rw.routes.values() for c in line.coords]
+    lats = [c[1] for line in rw.routes.values() for c in line.coords]
     return {
         "id": rw.id,
         "name": m["name"],
@@ -210,7 +212,11 @@ def web(rw):
         "overlays": m.get("overlays", []),
         "track": [[round(x, 6), round(y, 6)] for x, y in rw.track.coords],
         "trackMeasures": [round(v, 1) for v in rw.track.measures],
+        # Every route (the first is "track" above); trips name the one they run on.
+        "routes": [{"id": rid, "track": [[round(x, 6), round(y, 6)] for x, y in line.coords],
+                    "measures": [round(v, 1) for v in line.measures]} for rid, line in rw.routes.items()],
         "stations": [{"id": s.id, "name": s.name, "lon": s.lon, "lat": s.lat, "m": round(s.measure, 1),
+                      "on": {rid: round(mo[0], 1) for rid, mo in s.on.items() if mo[1] <= ROUTE_SNAP_METRES},
                       **({"plat": s.plat_station} if s.plat_station else {}),
                       **({"mp": s.plat_milepost} if s.plat_milepost else {}),
                       **({"note": s.note} if s.note else {})}
@@ -224,6 +230,7 @@ def web(rw):
             "feed": f"feeds/{era_ids(rw, e)}.zip",
             "trips": [{
                 "number": t.number,
+                "route": t.route,
                 "direction": t.direction,
                 "headsign": t.stops[-1].station.name,
                 # [station index, arrive, flag stop, time kind, leave]

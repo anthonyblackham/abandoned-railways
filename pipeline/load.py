@@ -11,6 +11,7 @@ import yaml
 from .geo import METRES_PER_MILE, Line
 
 SNAP_WARN_METRES = 50
+ROUTE_SNAP_METRES = 150   # a station this close to a route lies on it
 PLAT_WARN_METRES = 0.05 * METRES_PER_MILE   # per gap between neighbouring stations
 SPEED_RANGE_MPH = (3, 60)   # slow street running and terminal approaches are real
 TIME_RE = re.compile(r"^(~?)(\d{1,2}):(\d{2})$")
@@ -36,8 +37,9 @@ class Station:
     lon: float
     lat: float
     aliases: list
-    measure: float = 0.0   # metres along the track
-    offset: float = 0.0    # metres off the track
+    measure: float = 0.0   # metres along its nearest route
+    offset: float = 0.0    # metres off that route
+    on: dict = field(default_factory=dict)   # route id -> (measure, offset), for every route
     plat_station: str | None = None   # engineering station off the plat, e.g. "1059+23"
     plat_series: str = ""             # which stationing series it belongs to
     plat_milepost: str = ""           # milepost printed on the plat, if any
@@ -63,11 +65,16 @@ class Trip:
     number: str
     file: str
     stops: list = field(default_factory=list)
+    route: str = ""        # the track route it runs on (set by assign_route)
+
+    def m(self, stop):
+        """Metres along this trip's route."""
+        return stop.station.on[self.route][0]
 
     @property
     def direction(self):
         """0 when the trip runs toward increasing measure, 1 otherwise."""
-        return 0 if self.stops[-1].station.measure >= self.stops[0].station.measure else 1
+        return 0 if self.m(self.stops[-1]) >= self.m(self.stops[0]) else 1
 
 
 @dataclass
@@ -85,10 +92,11 @@ class Era:
 class Railway:
     id: str
     meta: dict
-    track: Line
+    track: Line      # the main (first) route
     stations: dict   # id -> Station
     eras: list
     plat_index: list = field(default_factory=list)
+    routes: dict = field(default_factory=dict)   # route id -> Line
 
 
 def parse_time(cell):
@@ -110,17 +118,25 @@ def load(folder, report):
     folder = Path(folder)
     meta = yaml.safe_load((folder / "railway.yaml").read_text(encoding="utf8"))
 
+    # A line is one or more routes (LineStrings); branches each get their own route,
+    # sharing track where they overlap. The first is the main route.
     track_features = json.loads((folder / "track.geojson").read_text(encoding="utf8"))["features"]
-    if len(track_features) != 1:
-        report.error(f"track.geojson: expected one LineString, found {len(track_features)} features")
-    track = Line(track_features[0]["geometry"]["coordinates"])
+    routes = {}
+    for i, f in enumerate(track_features):
+        rid = str(f.get("properties", {}).get("id") or f"route{i + 1}")
+        if rid in routes:
+            report.error(f"track.geojson: route id {rid!r} is used twice")
+        routes[rid] = Line(f["geometry"]["coordinates"])
+    track = next(iter(routes.values()))
 
     stations, by_name = {}, {}
     for f in json.loads((folder / "stations.geojson").read_text(encoding="utf8"))["features"]:
         p = f["properties"]
         lon, lat = f["geometry"]["coordinates"][:2]
         s = Station(p["id"], p["name"], lon, lat, p.get("aliases", []), note=p.get("note", ""))
-        s.measure, s.offset = track.locate((lon, lat))
+        for rid, line in routes.items():
+            s.on[rid] = line.locate((lon, lat))
+        s.measure, s.offset = min(s.on.values(), key=lambda mo: mo[1])
         if s.offset > SNAP_WARN_METRES:
             report.warn(f"station {s.name}: {s.offset:.0f} m from the track")
         stations[s.id] = s
@@ -141,10 +157,10 @@ def load(folder, report):
             era.trips += read_timetable(path, by_name, report)
         eras.append(era)
 
-    rw = Railway(meta["id"], meta, track, stations, eras, plat_index)
+    rw = Railway(meta["id"], meta, track, stations, eras, plat_index, routes)
     for era in eras:
         for trip in era.trips:
-            if check_trip(era, trip, report):
+            if assign_route(era, trip, routes, report) and check_trip(era, trip, report):
                 estimate_times(trip)
                 check_speeds(era, trip, report)
     return rw
@@ -283,6 +299,30 @@ def read_timetable(path, by_name, report):
     return trips
 
 
+def assign_route(era, trip, routes, report):
+    """Pick the route every stop of the trip lies on, in order (the closest fit)."""
+    if len(trip.stops) < 2:
+        report.error(f"era {era.id}, train {trip.number}: fewer than two stops")
+        return False
+    best = None
+    for rid in routes:
+        if any(s.station.on[rid][1] > ROUTE_SNAP_METRES for s in trip.stops):
+            continue
+        ms = [s.station.on[rid][0] for s in trip.stops]
+        if not (all(a < b for a, b in zip(ms, ms[1:])) or all(a > b for a, b in zip(ms, ms[1:]))):
+            continue
+        fit = sum(s.station.on[rid][1] for s in trip.stops)
+        if best is None or fit < best[0]:
+            best = (fit, rid)
+    if best is None:
+        far = max(trip.stops, key=lambda s: min(o for _, o in s.station.on.values())).station.name
+        report.error(f"era {era.id}, train {trip.number}: no route passes all its stops in order "
+                     f"(check {far}, or the station order)")
+        return False
+    trip.route = best[1]
+    return True
+
+
 def check_trip(era, trip, report):
     """Report problems; return False if the trip is too broken to build."""
     where = f"era {era.id}, train {trip.number}"
@@ -299,7 +339,7 @@ def check_trip(era, trip, report):
             report.error(f"{where}: time goes backwards from {a} to {b}")
     sign = 1 if trip.direction == 0 else -1
     for a, b in zip(trip.stops, trip.stops[1:]):
-        if sign * (b.station.measure - a.station.measure) <= 0:
+        if sign * (trip.m(b) - trip.m(a)) <= 0:
             report.error(f"{where}: {b.station.name} is not beyond {a.station.name} along the track")
     return len(report.errors) == before
 
@@ -309,9 +349,9 @@ def estimate_times(trip):
     known = [i for i, s in enumerate(trip.stops) if s.time is not None]
     for i0, i1 in zip(known, known[1:]):
         a, b = trip.stops[i0], trip.stops[i1]
-        span = b.station.measure - a.station.measure
+        span = trip.m(b) - trip.m(a)
         for s in trip.stops[i0 + 1:i1]:
-            u = (s.station.measure - a.station.measure) / span if span else 0
+            u = (trip.m(s) - trip.m(a)) / span if span else 0
             # Kept to the second: close flag stops would collide if rounded to minutes.
             s.time = round(a.leaves + u * (b.time - a.leaves))
 
@@ -319,7 +359,7 @@ def estimate_times(trip):
 def check_speeds(era, trip, report):
     lo, hi = SPEED_RANGE_MPH
     for a, b in zip(trip.stops, trip.stops[1:]):
-        miles = abs(b.station.measure - a.station.measure) / METRES_PER_MILE
+        miles = abs(trip.m(b) - trip.m(a)) / METRES_PER_MILE
         minutes = (b.time - a.leaves) / 60
         mph = miles / (minutes / 60) if minutes > 0 else float("inf")
         if not lo <= mph <= hi:
