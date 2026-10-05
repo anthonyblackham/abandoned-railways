@@ -68,7 +68,7 @@
     <label><input type="checkbox" id="dims"> Parcel dimensions (Multnomah, close zoom only)</label>
     <label><input type="checkbox" id="taxlots"> Tax lots (regional)</label>
 
-    <h2>Lines</h2>
+    <h2>Lines and stops</h2>
     <div id="railways"></div>
     <label class="hint">Add a local GeoJSON (stays in your browser): <input type="file" id="file" accept=".geojson,.json" multiple></label>
 
@@ -215,16 +215,27 @@ function toggleTaxlots(on) {
 $("taxlots").onchange = e => toggleTaxlots(e.target.checked);
 
 // ---- Lines ----------------------------------------------------------------
-const lineIds = [];
+// A line source draws its LineStrings as track and its Points as stops, named by their
+// `name` property (railway stations, or the points in a local GeoJSON).
+const lineIds = [], stopLayers = [];
+const layersOf = id => [`${id}-casing`, id, `${id}-stops`, `${id}-names`];
 function addLine(id, geojson, colour) {
   map.addSource(id, { type: "geojson", data: geojson });
-  map.addLayer({ id: `${id}-casing`, type: "line", source: id, paint: { "line-color": "#fff", "line-width": 5, "line-opacity": 0.7 } });
-  map.addLayer({ id, type: "line", source: id, paint: { "line-color": colour, "line-width": 2.5 } });
-  lineIds.push(`${id}-casing`, id);
+  const lines = ["==", ["geometry-type"], "LineString"], points = ["==", ["geometry-type"], "Point"];
+  map.addLayer({ id: `${id}-casing`, type: "line", source: id, filter: lines, paint: { "line-color": "#fff", "line-width": 5, "line-opacity": 0.7 } });
+  map.addLayer({ id, type: "line", source: id, filter: lines, paint: { "line-color": colour, "line-width": 2.5 } });
+  map.addLayer({ id: `${id}-stops`, type: "circle", source: id, filter: points,
+    paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 2.5, 16, 5], "circle-color": "#fff", "circle-stroke-color": colour, "circle-stroke-width": 2 } });
+  map.addLayer({ id: `${id}-names`, type: "symbol", source: id, filter: points, minzoom: 12,
+    layout: { "text-field": ["coalesce", ["get", "name"], ["get", "Name"], ""], "text-font": ["Noto Sans Italic"], "text-size": 12,
+      "text-offset": [0.7, 0], "text-anchor": "left", "text-optional": true },
+    paint: { "text-color": colour, "text-halo-color": "#fff", "text-halo-width": 1.6 } });
+  lineIds.push(...layersOf(id));
+  stopLayers.push(`${id}-stops`);
   restack();
 }
 function setLineVisible(id, on) {
-  for (const l of [`${id}-casing`, id]) map.getLayer(l) && map.setLayoutProperty(l, "visibility", on ? "visible" : "none");
+  for (const l of layersOf(id)) map.getLayer(l) && map.setLayoutProperty(l, "visibility", on ? "visible" : "none");
 }
 const shown = store.get("coords.lines", {});
 try {
@@ -241,8 +252,10 @@ try {
         loaded = true;
         const data = await (await fetch(`../data/${r.id}.json`)).json();
         const routes = data.routes ?? [{ track: data.track }];
-        addLine(`rw-${r.id}`, { type: "FeatureCollection", features: routes.map(rt =>
-          ({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: rt.track } })) }, r.colour);
+        addLine(`rw-${r.id}`, { type: "FeatureCollection", features: [
+          ...routes.map(rt => ({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: rt.track } })),
+          ...data.stations.map(st => ({ type: "Feature", properties: { name: st.name }, geometry: { type: "Point", coordinates: [st.lon, st.lat] } })),
+        ] }, r.colour);
       }
       setLineVisible(`rw-${r.id}`, cb.checked);
     };
@@ -285,7 +298,15 @@ map.addSource("here", { type: "geojson", data: { type: "FeatureCollection", feat
 map.addLayer({ id: "here", type: "circle", source: "here",
   paint: { "circle-radius": 6, "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#ff2d55", "circle-stroke-width": 2.5 } });
 lineIds.push("here");
-map.on("click", e => show([e.lngLat.lng, e.lngLat.lat]));
+// Clicking a stop reads the stop's own position and offers its name as the label.
+map.on("click", e => {
+  const box = [[e.point.x - 6, e.point.y - 6], [e.point.x + 6, e.point.y + 6]];
+  const stop = map.queryRenderedFeatures(box, { layers: stopLayers.filter(l => map.getLayer(l)) })[0];
+  if (stop) {
+    show(stop.geometry.coordinates);
+    $("label").value = stop.properties.name ?? stop.properties.Name ?? "";
+  } else show([e.lngLat.lng, e.lngLat.lat]);
+});
 map.on("mousemove", e => {
   const [x, y] = toSP([e.lngLat.lng, e.lngLat.lat]);
   $("status").textContent = `E ${fmt(x)}  N ${fmt(y)} ft`;
