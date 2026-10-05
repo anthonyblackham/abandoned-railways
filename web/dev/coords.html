@@ -7,7 +7,7 @@
 <!-- Dev tool: click the map to read Oregon North state plane coordinates (EPSG:2913,
      international feet) over Portland Maps' historic aerials and parcel dimensions,
      and collect labelled points (e.g. plat stations) as control points for a CSV.
-     ?center=-122.6537,45.4584&zoom=16&year=1925 -->
+     ?center=-122.6537,45.4584&zoom=16&year=1925 (or year=westlinn-1936) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.css">
 <style>
   :root { --panel: #1f2328; --text: #e8e4da; --muted: #9aa0a6; --line: #3a4048; --accent: #c9a35a; }
@@ -122,28 +122,49 @@ await map.once("load");
 const firstLabel = map.getStyle().layers.find(l => l.type === "symbol")?.id;
 
 // ---- Imagery --------------------------------------------------------------
-// Every Portland Maps aerial year, read from the service directory so new years appear by themselves.
-let years = [];
-try {
-  const dir = await (await fetch(`${PM}?f=json`)).json();
-  years = dir.services.map(s => s.name.split("/")[1])
-    .filter(n => /^Aerial_(Photos|Scans)_/.test(n) && !/Colum_Slough|Multi_Year/.test(n));
-} catch {
-  years = ["Aerial_Scans_1925", "Aerial_Photos_1948", "Aerial_Photos_1960", "Aerial_Photos_1975", "Aerial_Photos_1990", "Aerial_Photos_Summer_2025"];
+// Every aerial year from Portland Maps and from West Linn, read from their service
+// directories so new years appear by themselves. An option's value is its service URL.
+// Portland's 1925 scans reach south to about Oak Grove; West Linn's 1936 photos cover
+// Jennings Lodge to Canemah, both sides of the river.
+const WL = "https://geo.westlinnoregon.gov/server/rest/services/Hosted";
+const SOURCES = [
+  { group: "Portland", dir: PM, attribution: "Aerials: City of Portland, PortlandMaps",
+    pick: n => /^Aerial_(Photos|Scans)_/.test(n) && !/Colum_Slough|Multi_Year/.test(n),
+    label: n => n.replace(/^Aerial_(Photos|Scans)_/, "").replace(/_/g, " ") + (/Scans/.test(n) ? " (scans)" : ""),
+    fallback: ["Aerial_Scans_1925", "Aerial_Photos_1948", "Aerial_Photos_1960", "Aerial_Photos_1975", "Aerial_Photos_1990", "Aerial_Photos_Summer_2025"] },
+  { group: "West Linn", dir: WL, attribution: "Aerials: City of West Linn",
+    pick: n => /^\d{4}.*Imagery/.test(n) && !/CIR/.test(n),
+    label: n => n.replace(/Imagery|Tile/g, "").replace("LeafOff", "leaf-off").replace("Flood", "flood").replace(/^(\d{4})/, "$1 ").trim(),
+    fallback: ["1936ImageryTile", "1968ImageryTile", "1988ImageryTile", "2025ImageryTile"] },
+];
+const attributions = {};
+for (const src of SOURCES) {
+  let names;
+  try {
+    const dir = await (await fetch(`${src.dir}?f=json`)).json();
+    names = dir.services.map(s => s.name.split("/").pop()).filter(src.pick);
+  } catch { names = src.fallback; }
+  const label = n => src.label(n).replace(/^(Summer|Winter) (\d{4})/, "$2 $1");
+  names.sort((a, b) => label(a).localeCompare(label(b)));
+  const group = Object.assign(document.createElement("optgroup"), { label: src.group });
+  for (const n of names) {
+    group.append(new Option(`${label(n)}`, `${src.dir}/${n}`));
+    attributions[`${src.dir}/${n}`] = src.attribution;
+  }
+  $("year").append(group);
 }
-const yearOf = n => n.replace(/^Aerial_(Photos|Scans)_/, "").replace(/_/g, " ");
-years.sort((a, b) => yearOf(a).replace(/\D/g, "") - yearOf(b).replace(/\D/g, ""));
-for (const n of years) $("year").add(new Option(yearOf(n) + (/Scans/.test(n) ? " (scans)" : ""), n));
+const yearOptions = [...$("year").options].filter(o => o.value);
 
-function setYear(name) {
+function setYear(url) {
+  if (url && !/^https?:/.test(url)) url = `${PM}/${url}`;   // older saved choices were bare Portland names
   if (map.getLayer("aerial")) map.removeLayer("aerial");
   if (map.getSource("aerial")) map.removeSource("aerial");
-  if (name) {
+  if (url) {
     map.addSource("aerial", { type: "raster", tileSize: 256, maxzoom: 21,
-      tiles: [`${PM}/${name}/MapServer/tile/{z}/{y}/{x}`], attribution: "Aerials: City of Portland, PortlandMaps" });
+      tiles: [`${url}/MapServer/tile/{z}/{y}/{x}`], attribution: attributions[url] ?? "" });
     map.addLayer({ id: "aerial", type: "raster", source: "aerial", paint: { "raster-opacity": +$("opacity").value } }, firstLabel);
   }
-  store.set("coords.year", name);
+  store.set("coords.year", url);
   restack(); washAerial();
 }
 $("year").onchange = e => setYear(e.target.value);
@@ -325,8 +346,13 @@ $("go").onclick = () => {
 $("goto").onkeydown = e => { if (e.key === "Enter") $("go").click(); };
 
 // Restore the last session's layers.
-const year = q.get("year") ? years.find(n => n.endsWith(q.get("year"))) : store.get("coords.year", "Aerial_Scans_1925");
-if (year) { $("year").value = year; setYear(year); }
+// ?year=1936 picks the first source with that year (Portland, then West Linn); ?year=westlinn-1936 picks West Linn's.
+const want = q.get("year");
+const year = want
+  ? yearOptions.find(o => (/^westlinn-/i.test(want) ? o.value.startsWith(WL) : true) && o.label.startsWith(want.replace(/^westlinn-/i, "").replace(/_/g, " ")))?.value
+    ?? yearOptions.find(o => o.value.endsWith(want))?.value
+  : store.get("coords.year", `${PM}/Aerial_Scans_1925`);
+if (year) { const url = /^https?:/.test(year) ? year : `${PM}/${year}`; $("year").value = url; setYear(url); }
 if (store.get("coords.dims", false)) { $("dims").checked = true; toggleDims(true); }
 if (store.get("coords.taxlots", false)) { $("taxlots").checked = true; toggleTaxlots(true); }
 </script>
