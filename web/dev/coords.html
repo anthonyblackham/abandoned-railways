@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plat Coordinates</title>
+<!-- Dev tool: click the map to read Oregon North state plane coordinates (EPSG:2913,
+     international feet) over Portland Maps' historic aerials and parcel dimensions,
+     and collect labelled points (e.g. plat stations) as control points for a CSV.
+     ?center=-122.6537,45.4584&zoom=16&year=1925 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.css">
+<style>
+  :root { --panel: #1f2328; --text: #e8e4da; --muted: #9aa0a6; --line: #3a4048; --accent: #c9a35a; }
+  html, body { margin: 0; height: 100%; background: var(--panel); color: var(--text); font: 13px system-ui, sans-serif; }
+  #wrap { display: flex; height: 100%; }
+  #map { flex: 1; }
+  #panel { width: 340px; overflow-y: auto; padding: 12px 14px; box-sizing: border-box; border-left: 1px solid var(--line); }
+  h1 { font-size: 15px; margin: 0 0 8px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 16px 0 6px; }
+  label { display: block; margin: 4px 0; }
+  select, input[type=text], button { background: #2b3036; color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; font: inherit; }
+  input[type=text] { width: 100%; box-sizing: border-box; }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  .row { display: flex; gap: 6px; align-items: center; }
+  .row > * { flex: 1; }
+  .coord { font: 13px ui-monospace, Consolas, monospace; background: #2b3036; border-radius: 4px; padding: 6px 8px; margin: 4px 0; }
+  .coord b { color: var(--accent); font-weight: normal; display: inline-block; width: 6.5em; font-family: system-ui, sans-serif; }
+  .hint { color: var(--muted); font-size: 12px; line-height: 1.45; }
+  table { width: 100%; border-collapse: collapse; font: 12px ui-monospace, Consolas, monospace; }
+  td { padding: 3px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.l { font-family: system-ui, sans-serif; }
+  td button { padding: 0 5px; }
+  #status { position: absolute; left: 8px; bottom: 26px; background: rgba(31,35,40,.85); padding: 3px 8px; border-radius: 4px; font: 12px ui-monospace, Consolas, monospace; pointer-events: none; }
+  #zoomhint { position: absolute; left: 50%; top: 8px; transform: translateX(-50%); background: rgba(31,35,40,.85); padding: 3px 10px; border-radius: 4px; display: none; }
+  #mapbox { position: relative; flex: 1; }
+  @media (max-width: 700px) { #wrap { flex-direction: column; } #panel { width: 100%; height: 45%; border-left: 0; border-top: 1px solid var(--line); } }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="mapbox"><div id="map" style="position:absolute;inset:0"></div><div id="status"></div><div id="zoomhint"></div></div>
+  <div id="panel">
+    <h1>Plat coordinates</h1>
+    <div class="hint">Click the map for Oregon North state plane coordinates (EPSG:2913, NAD83(HARN), international feet).</div>
+
+    <h2>Clicked point</h2>
+    <div class="coord"><b>Easting</b><span id="e">–</span></div>
+    <div class="coord"><b>Northing</b><span id="n">–</span></div>
+    <div class="coord"><b>Lat, lng</b><span id="ll">–</span></div>
+    <div class="row" style="margin-top:6px">
+      <button id="copy">Copy E, N</button>
+    </div>
+    <div class="row" style="margin-top:6px">
+      <input type="text" id="label" placeholder="Label, e.g. OCL 51+08.85">
+      <button id="add" style="flex:0 0 auto">Add</button>
+    </div>
+
+    <h2>Go to</h2>
+    <div class="row">
+      <input type="text" id="goto" placeholder="Easting, northing (ft) or lat, lng">
+      <button id="go" style="flex:0 0 auto">Go</button>
+    </div>
+
+    <h2>Imagery</h2>
+    <label>Aerial <select id="year"><option value="">None (street map)</option></select></label>
+    <label class="row">Opacity <input type="range" id="opacity" min="0" max="1" step="0.05" value="1"></label>
+    <label><input type="checkbox" id="dims"> Parcel dimensions (Multnomah, close zoom only)</label>
+    <label><input type="checkbox" id="taxlots"> Tax lots (regional)</label>
+
+    <h2>Lines</h2>
+    <div id="railways"></div>
+    <label class="hint">Add a local GeoJSON (stays in your browser): <input type="file" id="file" accept=".geojson,.json" multiple></label>
+
+    <h2>Points <span id="count"></span></h2>
+    <table id="points"></table>
+    <div class="row" style="margin-top:6px">
+      <button id="csv">Export CSV</button>
+      <button id="clear">Clear</button>
+    </div>
+
+    <h2>Accuracy</h2>
+    <div class="hint">
+      Treat values as good to a few feet, not survey grade.
+      The map works in WGS84; EPSG:2913 is on NAD83(HARN), and there is more than one accepted way to convert between them.
+      This page uses a null transform (no datum shift), the same one Portland Maps' servers use, so its numbers match theirs.
+      pyproj's default instead applies a Helmert shift that moves points about 4 ft here (3.6 ft east, 2.1 ft north), and QGIS may pick either one.
+      Bigger errors come from the sources themselves: how well each year's aerial was georeferenced (the 1925 scans especially), and how carefully you click.
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@5/dist/maplibre-gl.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.11.0/proj4.js"></script>
+<script type="module">
+const PM = "https://www.portlandmaps.com/arcgis/rest/services/Public";
+// Oregon North, NAD83(HARN), international feet. No datum shift from WGS84 (a null transform),
+// which is what Portland Maps' own servers do; pyproj's default shifts ~4 ft instead.
+proj4.defs("EPSG:2913", "+proj=lcc +lat_0=43.6666666666667 +lon_0=-120.5 +lat_1=46 +lat_2=44.3333333333333 +x_0=2500000.0001424 +y_0=0 +ellps=GRS80 +units=ft +no_defs");
+const toSP = ll => proj4("EPSG:4326", "EPSG:2913", ll);
+const fromSP = en => proj4("EPSG:2913", "EPSG:4326", en);
+
+const q = new URLSearchParams(location.search);
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+
+const map = new maplibregl.Map({
+  container: "map",
+  style: "https://tiles.openfreemap.org/styles/positron",
+  center: (q.get("center") ?? "-122.6537,45.4584").split(",").map(Number),
+  zoom: +(q.get("zoom") ?? 15),
+  maxZoom: 21,
+  attributionControl: { compact: true },
+});
+map.addControl(new maplibregl.NavigationControl(), "top-left");
+map.addControl(new maplibregl.ScaleControl({ unit: "imperial" }), "bottom-left");
+await map.once("load");
+
+// The first layer drawn above the imagery: OpenFreeMap's labels stay on top.
+const firstLabel = map.getStyle().layers.find(l => l.type === "symbol")?.id;
+
+// ---- Imagery --------------------------------------------------------------
+// Every Portland Maps aerial year, read from the service directory so new years appear by themselves.
+let years = [];
+try {
+  const dir = await (await fetch(`${PM}?f=json`)).json();
+  years = dir.services.map(s => s.name.split("/")[1])
+    .filter(n => /^Aerial_(Photos|Scans)_/.test(n) && !/Colum_Slough|Multi_Year/.test(n));
+} catch {
+  years = ["Aerial_Scans_1925", "Aerial_Photos_1948", "Aerial_Photos_1960", "Aerial_Photos_1975", "Aerial_Photos_1990", "Aerial_Photos_Summer_2025"];
+}
+const yearOf = n => n.replace(/^Aerial_(Photos|Scans)_/, "").replace(/_/g, " ");
+years.sort((a, b) => yearOf(a).replace(/\D/g, "") - yearOf(b).replace(/\D/g, ""));
+for (const n of years) $("year").add(new Option(yearOf(n) + (/Scans/.test(n) ? " (scans)" : ""), n));
+
+function setYear(name) {
+  if (map.getLayer("aerial")) map.removeLayer("aerial");
+  if (map.getSource("aerial")) map.removeSource("aerial");
+  if (name) {
+    map.addSource("aerial", { type: "raster", tileSize: 256, maxzoom: 21,
+      tiles: [`${PM}/${name}/MapServer/tile/{z}/{y}/{x}`], attribution: "Aerials: City of Portland, PortlandMaps" });
+    map.addLayer({ id: "aerial", type: "raster", source: "aerial", paint: { "raster-opacity": +$("opacity").value } }, firstLabel);
+  }
+  store.set("coords.year", name);
+  restack(); washAerial();
+}
+$("year").onchange = e => setYear(e.target.value);
+$("opacity").oninput = e => map.getLayer("aerial") && map.setPaintProperty("aerial", "raster-opacity", +e.target.value);
+
+// Parcel dimensions: a tile cache that only draws at about 1:2,257 and closer.
+const DIMS_MIN = 17;
+function toggleDims(on) {
+  if (on && !map.getSource("dims")) {
+    map.addSource("dims", { type: "raster", tileSize: 256, minzoom: DIMS_MIN, maxzoom: 19,
+      tiles: [`${PM}/Parcel_Dimensions/MapServer/tile/{z}/{y}/{x}`] });
+    map.addLayer({ id: "dims", type: "raster", source: "dims", minzoom: DIMS_MIN });
+  } else if (!on && map.getLayer("dims")) { map.removeLayer("dims"); map.removeSource("dims"); }
+  store.set("coords.dims", on); restack(); zoomHint(); washAerial();
+}
+// The dimensions are thin blue lettering, lost on a dark photo: wash the photo out while they show.
+function washAerial() {
+  if (!map.getLayer("aerial")) return;
+  const on = !!map.getLayer("dims");
+  map.setPaintProperty("aerial", "raster-brightness-min", on ? 0.45 : 0);
+  map.setPaintProperty("aerial", "raster-saturation", on ? -0.6 : 0);
+}
+// Both parcel overlays vanish when zoomed out, so say so rather than leave the user guessing.
+function zoomHint() {
+  const z = map.getZoom();
+  const msg = map.getLayer("dims") && z < DIMS_MIN ? "Zoom in for parcel dimensions"
+    : map.getLayer("taxlots") && z < TAXLOTS_MIN ? "Zoom in for tax lots" : "";
+  $("zoomhint").textContent = msg;
+  $("zoomhint").style.display = msg ? "block" : "none";
+}
+map.on("zoomend", zoomHint);
+$("dims").onchange = e => toggleDims(e.target.checked);
+
+// Regional tax lots, drawn on request by the dynamic map service. Its layer is hidden by
+// default and filled beige, so ask for it as orange outlines; it only draws at 1:10,000 and closer.
+const TAXLOTS_MIN = 15;
+const TAXLOT_STYLE = encodeURIComponent(JSON.stringify([{ id: 0, source: { type: "mapLayer", mapLayerId: 0 },
+  drawingInfo: { renderer: { type: "simple", symbol: { type: "esriSFS", style: "esriSFSNull",
+    outline: { type: "esriSLS", style: "esriSLSSolid", color: [255, 120, 0, 255], width: 1.5 } } } } }]));
+function toggleTaxlots(on) {
+  if (on && !map.getSource("taxlots")) {
+    map.addSource("taxlots", { type: "raster", tileSize: 256, minzoom: TAXLOTS_MIN,
+      tiles: [`${PM}/Taxlots/MapServer/export?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=512,512&dpi=192&format=png32&transparent=true&dynamicLayers=${TAXLOT_STYLE}&f=image`] });
+    map.addLayer({ id: "taxlots", type: "raster", source: "taxlots", minzoom: TAXLOTS_MIN });
+  } else if (!on && map.getLayer("taxlots")) { map.removeLayer("taxlots"); map.removeSource("taxlots"); }
+  store.set("coords.taxlots", on); restack(); zoomHint();
+}
+$("taxlots").onchange = e => toggleTaxlots(e.target.checked);
+
+// ---- Lines ----------------------------------------------------------------
+const lineIds = [];
+function addLine(id, geojson, colour) {
+  map.addSource(id, { type: "geojson", data: geojson });
+  map.addLayer({ id: `${id}-casing`, type: "line", source: id, paint: { "line-color": "#fff", "line-width": 5, "line-opacity": 0.7 } });
+  map.addLayer({ id, type: "line", source: id, paint: { "line-color": colour, "line-width": 2.5 } });
+  lineIds.push(`${id}-casing`, id);
+  restack();
+}
+function setLineVisible(id, on) {
+  for (const l of [`${id}-casing`, id]) map.getLayer(l) && map.setLayoutProperty(l, "visibility", on ? "visible" : "none");
+}
+const shown = store.get("coords.lines", {});
+try {
+  const index = await (await fetch("../data/index.json")).json();
+  for (const r of index) {
+    const box = document.createElement("label");
+    box.innerHTML = `<input type="checkbox"> <span style="color:${r.colour}">■</span> ${r.name}`;
+    const cb = box.querySelector("input");
+    cb.checked = !!shown[r.id];
+    let loaded = false;
+    cb.onchange = async () => {
+      shown[r.id] = cb.checked; store.set("coords.lines", shown);
+      if (!loaded) {
+        loaded = true;
+        const data = await (await fetch(`../data/${r.id}.json`)).json();
+        const routes = data.routes ?? [{ track: data.track }];
+        addLine(`rw-${r.id}`, { type: "FeatureCollection", features: routes.map(rt =>
+          ({ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: rt.track } })) }, r.colour);
+      }
+      setLineVisible(`rw-${r.id}`, cb.checked);
+    };
+    $("railways").append(box);
+    if (cb.checked) cb.onchange();
+  }
+} catch { $("railways").textContent = "No railway data (run the build)."; }
+
+const COLOURS = ["#d7263d", "#1b998b", "#f46036", "#2e294e", "#c5d86d"];
+let fileCount = 0;
+$("file").onchange = async e => {
+  for (const f of e.target.files) {
+    const id = `file-${fileCount}`, colour = COLOURS[fileCount++ % COLOURS.length];
+    addLine(id, JSON.parse(await f.text()), colour);
+    const box = document.createElement("label");
+    box.innerHTML = `<input type="checkbox" checked> <span style="color:${colour}">■</span> ${f.name}`;
+    box.querySelector("input").onchange = ev => setLineVisible(id, ev.target.checked);
+    $("railways").append(box);
+  }
+  e.target.value = "";
+};
+
+// Points and lines stay above imagery and overlays.
+function restack() {
+  for (const l of [...lineIds, "pts-ring", "pts", "pts-label"]) if (map.getLayer(l)) map.moveLayer(l);
+}
+
+// ---- Clicking and points ---------------------------------------------------
+let current = null;
+const fmt = v => v.toFixed(2);
+function show(lngLat) {
+  const [e, n] = toSP(lngLat);
+  current = { lng: lngLat[0], lat: lngLat[1], e, n };
+  $("e").textContent = fmt(e) + " ft";
+  $("n").textContent = fmt(n) + " ft";
+  $("ll").textContent = `${lngLat[1].toFixed(7)}, ${lngLat[0].toFixed(7)}`;
+  map.getSource("here").setData({ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: lngLat } });
+}
+map.addSource("here", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+map.addLayer({ id: "here", type: "circle", source: "here",
+  paint: { "circle-radius": 6, "circle-color": "rgba(0,0,0,0)", "circle-stroke-color": "#ff2d55", "circle-stroke-width": 2.5 } });
+lineIds.push("here");
+map.on("click", e => show([e.lngLat.lng, e.lngLat.lat]));
+map.on("mousemove", e => {
+  const [x, y] = toSP([e.lngLat.lng, e.lngLat.lat]);
+  $("status").textContent = `E ${fmt(x)}  N ${fmt(y)} ft`;
+});
+map.getCanvas().style.cursor = "crosshair";
+
+$("copy").onclick = () => current && navigator.clipboard?.writeText(`${fmt(current.e)}, ${fmt(current.n)}`);
+
+let points = store.get("coords.points", []);
+map.addSource("pts", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+map.addLayer({ id: "pts", type: "circle", source: "pts", paint: { "circle-radius": 4, "circle-color": "#ffd23f", "circle-stroke-color": "#000", "circle-stroke-width": 1.2 } });
+map.addLayer({ id: "pts-label", type: "symbol", source: "pts",
+  layout: { "text-field": ["get", "label"], "text-font": ["Noto Sans Regular"], "text-size": 12, "text-offset": [0.8, 0], "text-anchor": "left" },
+  paint: { "text-color": "#111", "text-halo-color": "#fff", "text-halo-width": 1.6 } });
+
+function renderPoints() {
+  store.set("coords.points", points);
+  map.getSource("pts").setData({ type: "FeatureCollection", features: points.map(p =>
+    ({ type: "Feature", properties: { label: p.label }, geometry: { type: "Point", coordinates: [p.lng, p.lat] } })) });
+  $("count").textContent = points.length ? `(${points.length})` : "";
+  const t = $("points"); t.innerHTML = "";
+  points.forEach((p, i) => {
+    const tr = t.insertRow();
+    tr.innerHTML = `<td class="l"></td><td>${fmt(p.e)}<br>${fmt(p.n)}</td><td><button title="Go">→</button> <button title="Remove">×</button></td>`;
+    tr.cells[0].textContent = p.label;
+    const [go, del] = tr.querySelectorAll("button");
+    go.onclick = () => { map.flyTo({ center: [p.lng, p.lat], zoom: Math.max(map.getZoom(), 17) }); show([p.lng, p.lat]); };
+    del.onclick = () => { points.splice(i, 1); renderPoints(); };
+  });
+}
+renderPoints();
+$("add").onclick = () => {
+  if (!current) return;
+  points.push({ label: $("label").value.trim() || `Point ${points.length + 1}`, ...current });
+  $("label").value = "";
+  renderPoints();
+};
+$("label").onkeydown = e => { if (e.key === "Enter") $("add").click(); };
+$("clear").onclick = () => { if (confirm("Remove all points?")) { points = []; renderPoints(); } };
+$("csv").onclick = () => {
+  const esc = s => /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  const rows = [["label", "easting_ft", "northing_ft", "lat", "lng"],
+    ...points.map(p => [esc(p.label), fmt(p.e), fmt(p.n), p.lat.toFixed(7), p.lng.toFixed(7)])];
+  const a = Object.assign(document.createElement("a"), {
+    href: URL.createObjectURL(new Blob([rows.map(r => r.join(",")).join("\n") + "\n"], { type: "text/csv" })),
+    download: "control-points.csv" });
+  a.click();
+};
+
+// Go to: two numbers over 1000 are state plane feet, otherwise lat, lng.
+$("go").onclick = () => {
+  const [a, b] = ($("goto").value.match(/-?\d+(\.\d+)?/g) ?? []).map(Number);
+  if (b === undefined) return;
+  const ll = Math.abs(a) > 1000 ? fromSP([a, b]) : [b, a];
+  map.flyTo({ center: ll, zoom: Math.max(map.getZoom(), 17) });
+  show(ll);
+};
+$("goto").onkeydown = e => { if (e.key === "Enter") $("go").click(); };
+
+// Restore the last session's layers.
+const year = q.get("year") ? years.find(n => n.endsWith(q.get("year"))) : store.get("coords.year", "Aerial_Scans_1925");
+if (year) { $("year").value = year; setYear(year); }
+if (store.get("coords.dims", false)) { $("dims").checked = true; toggleDims(true); }
+if (store.get("coords.taxlots", false)) { $("taxlots").checked = true; toggleTaxlots(true); }
+</script>
+</body>
+</html>
