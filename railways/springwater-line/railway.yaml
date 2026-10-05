@@ -1,0 +1,44 @@
+# Track: the Oregon City Line to the Springwater Corridor, then the City of Portland's Springwater
+# Corridor trail to Boring; Portland Traction Co. valuation sheets V-B 1-4 and the 1911 Estacada
+# survey (Clackamas Co. SN1911-019) by their curve data, placed by the printed bearings and the 1967
+# highway survey (SN1967-034), then centred on the right-of-way parcel strip from Boring to near Estacada;
+# the 1923 Oak Grove Project map (SN1923-007) from Faraday to Cazadero. One short join is approximate:
+# 1837+74 to Faraday (about 0.7 mile).
+# Stations: the PRL&P 1917 station circular, by its distances from Cazadero (they agree with the track within 0.5%).
+id: springwater-line
+name: Springwater Line
+operator: Portland Railway, Light & Power Co.
+opened: 1903
+closed: 1958
+timezone: America/Los_Angeles
+colour: "#2f7a6b"
+featured: "1916"
+
+eras:
+  - id: "1916"
+    label: Portland – Gresham – Estacada – Cazadero
+    days: daily
+    source: trout-route-1916
+    notes:
+      - Weekday pattern of the February 1916 timetable. Sunday-only trains (301, the Sunday extras) and
+        Sunday-only running beyond Gresham (trains 12 and 40) are left out; train 28 ends at Estacada
+        (it ran on to Cazadero Saturdays and Sundays only).
+      - Train 2 carried mail and express, with passengers on Sundays only.
+      - The Bellrose (8, 7) and Stanley (26, 23) branch locals are not included.
+      - Times as printed at the timepoints; stations between are estimated by distance.
+
+sources:
+  trout-route-1916: >-
+    "The Trout Route", Portland Railway Light and Power Company interurban lines public timetable,
+    February 1916 (Sheldon Perry collection, wx4.org).
+  prlp-1917: >-
+    Portland Railway, Light & Power Co., Traffic Department Circular, "List of Freight and Passenger
+    Stations and Table of Distances on Interurban Lines", issued January 8, 1917.
+  valuation-v-b: >-
+    Portland Traction Co., Isolated Lands, Boring to Cazadero, valuation sheets V-B 1-4: curve data and stationing.
+  clackamas-surveys: >-
+    Clackamas County survey records SN1911-019 (PRL&P property near Estacada and River Mill, 1911),
+    SN1967-034 (Oregon State Highway Department map of the PRL&P, Barton-Estacada, 1967) and
+    SN1923-007 (Oak Grove Project, transmission line and railroad, 1923).
+  portland-maps: >-
+    City of Portland (PortlandMaps): the Springwater Corridor and Springwater on the Willamette trails.

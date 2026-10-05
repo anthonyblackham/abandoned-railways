@@ -10,7 +10,11 @@ east), then placed on the map by a rigid fit (rotation + translation, no
 scaling): roughly to reference geometry (`fit`), then exactly to control points
 the user reads off georeferenced plats (`place`).
 
-CSV columns: from_sta, to_sta, type (tangent | curve | equation), radius, delta, turn (L | R), sheet, notes
+CSV columns: from_sta, to_sta, type (tangent | curve | spiral | equation), radius, delta, turn (L | R), sheet, notes
+
+A spiral (easement) eases between a tangent and a curve: its curvature changes evenly
+from 0 to 1/radius (a spiral into the curve that follows) or back to 0 (a spiral out of
+the curve before it), so it turns through length / (2 * radius) radians.
 
 Control point CSV columns: label, easting_ft, northing_ft, station, offset_ft, sheet, notes.
 offset_ft is the distance from the centreline, e.g. "15 right" (right of the direction of
@@ -58,6 +62,9 @@ def read(path):
                 if abs(arc - (b - a)) > 0.5:
                     problems.append(f"line {i}: curve {r['from_sta']}-{r['to_sta']}: radius {e['radius']} and "
                                     f"delta {r['delta']} give {arc:.2f} ft, stationing gives {b - a:.2f} ft")
+            elif e["type"] == "spiral":
+                e["radius"] = float(r["radius"])
+                e["turn"] = r["turn"].strip().upper()
             elements.append(e)
     for x, y in zip(elements, elements[1:]):
         if abs(x["to"] - y["from"]) > 0.01:
@@ -69,11 +76,26 @@ def trace(elements, step=10.0):
     """Points (x, y, station) every `step` feet along the alignment, in a local frame."""
     x, y, h = 0.0, 0.0, 0.0     # heading in radians, 0 = east, counterclockwise positive
     pts = [(x, y, elements[0]["from"])]
+    prev = None
     for e in elements:
         length = e["to"] - e["from"]
         n = max(1, math.ceil(length / step))
         if e["type"] == "equation":     # station equation: same point, the stationing jumps
             pts.append((x, y, e["to"]))
+            continue
+        if e["type"] == "spiral":
+            sign = 1 if e["turn"] == "L" else -1
+            into = not (prev and prev["type"] == "curve")       # after a curve it spirals out
+            r = e["radius"]; m = max(1, math.ceil(length / 1.0))
+            for k in range(1, m + 1):
+                s0, s1 = length * (k - 1) / m, length * k / m; sm = (s0 + s1) / 2
+                kap = (sm if into else length - sm) / (length * r)
+                h += sign * kap * (s1 - s0) / 2
+                x += (s1 - s0) * math.cos(h); y += (s1 - s0) * math.sin(h)
+                h += sign * kap * (s1 - s0) / 2
+                if k % max(1, round(step)) == 0 or k == m:
+                    pts.append((x, y, e["from"] + s1))
+            prev = e
             continue
         if e["type"] == "tangent":
             for k in range(1, n + 1):
@@ -90,6 +112,7 @@ def trace(elements, step=10.0):
                 pts.append((cx + sign * r * math.sin(hh), cy - sign * r * math.cos(hh), e["from"] + length * k / n))
             h += sign * length / r
             x, y = pts[-1][0], pts[-1][1]
+        prev = e
     return pts
 
 

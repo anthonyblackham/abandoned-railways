@@ -71,6 +71,7 @@ Each feed's calendar runs from 2000 to 2099, so any GTFS tool shows the trains r
 - **Willamette Valley Southern** (1915–1933): Oregon City – Mt. Angel electric interurban.
 - **Willamette Falls Railway** (1925 timetable): Tualatin River – West Linn – Magones.
 - **Oregon City Line** (1911 and 1916 timetables): Portland – Milwaukie – Oregon City – Canemah Park, Portland Railway, Light & Power Co.
+- **Springwater Line** (1916 timetable): Portland – Lents – Gresham – Boring – Estacada – Cazadero, Portland Railway, Light & Power Co.
 
 ## License
 

@@ -1,0 +1,965 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ardenwald",
+    "name": "Ardenwald"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.633219,
+     45.461987
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "arnaud",
+    "name": "Arnaud"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.550419,
+     45.47767
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "bell",
+    "name": "Bell"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.592704,
+     45.455902
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "berkeley",
+    "name": "Berkeley"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.623763,
+     45.463261
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "brookwild",
+    "name": "Brookwild"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.610672,
+     45.459629
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chutes",
+    "name": "Chutes",
+    "note": "Not a passenger stop in the 1916 timetable"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.662379,
+     45.468459
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "errol",
+    "name": "Errol"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.616447,
+     45.461475
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ferry",
+    "name": "Ferry"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.66163,
+     45.464672
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "harney-avenue",
+    "name": "Harney Avenue",
+    "note": "Not a passenger stop in the 1916 timetable"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.659999,
+     45.462187
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "the-oaks",
+    "name": "The Oaks"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.661192,
+     45.471528
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "seventeenth-street",
+    "name": "Seventeenth Street"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.646534,
+     45.458728
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "sellwood-gardens",
+    "name": "Sellwood Gardens"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.641357,
+     45.459735
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "stanley",
+    "name": "Stanley"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.604527,
+     45.457684
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "wichita",
+    "name": "Wichita"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.600345,
+     45.456354
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "luther",
+    "name": "Luther"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.584407,
+     45.461203
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "kendall",
+    "name": "Kendall"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.579248,
+     45.464471
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "watson",
+    "name": "Watson"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.569915,
+     45.470029
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "gilbert",
+    "name": "Gilbert"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.538952,
+     45.480092
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ramapo",
+    "name": "Ramapo"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.533389,
+     45.481273
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "bellrose",
+    "name": "Bellrose"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.524596,
+     45.48131
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "wilson",
+    "name": "Wilson"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.516013,
+     45.480219
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "sycamore",
+    "name": "Sycamore"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.50215,
+     45.478483
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "jenne",
+    "name": "Jenne"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.485984,
+     45.485309
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "meadowbrook",
+    "name": "Meadowbrook"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.478127,
+     45.486772
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "cotton",
+    "name": "Cotton"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.450136,
+     45.489622
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "gresham-o-w-p",
+    "name": "Gresham (O.W.P.)",
+    "aliases": [
+     "Gresham (OWP) Depot and Substation"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.431533,
+     45.495364
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "schiller",
+    "name": "Schiller"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.42237,
+     45.4877
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "palmblad",
+    "name": "Palmblad"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.403253,
+     45.474252
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "anderson",
+    "name": "Anderson"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.388233,
+     45.460377
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "haley",
+    "name": "Haley"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.384534,
+     45.443972
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "siefer",
+    "name": "Siefer"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.388194,
+     45.422948
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "norris-spur",
+    "name": "Norris Spur"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.406528,
+     45.400435
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "barton",
+    "name": "Barton"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.408171,
+     45.390651
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "deep-creek",
+    "name": "Deep Creek"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.398519,
+     45.383583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "riverby",
+    "name": "Riverby"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.387817,
+     45.376697
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "glovers",
+    "name": "Glovers"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.369853,
+     45.365169
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "alspaugh",
+    "name": "Alspaugh"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.351104,
+     45.340624
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "cedarbrook",
+    "name": "Cedarbrook"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.352083,
+     45.345477
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "currinsville",
+    "name": "Currinsville"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.347192,
+     45.318581
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "morrow",
+    "name": "Morrow"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.344833,
+     45.305169
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "river-mill",
+    "name": "River Mill"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.343799,
+     45.298985
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "estacada",
+    "name": "Estacada",
+    "aliases": [
+     "Estacada Depot"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.336152,
+     45.286389
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "faraday",
+    "name": "Faraday"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.317755,
+     45.270094
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "cazadero",
+    "name": "Cazadero",
+    "aliases": [
+     "Cazadero Depot"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.308172,
+     45.266835
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "golf-junction",
+    "name": "Golf Junction",
+    "aliases": [
+     "Golf Links"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.653651,
+     45.4584
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "lents-junction",
+    "name": "Lents Junction",
+    "aliases": [
+     "Lents Junction Depot and Substation"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.559634,
+     45.475622
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "linnemann-junction",
+    "name": "Linnemann Junction",
+    "aliases": [
+     "Linneman Junction",
+     "Linneman Junction Depot"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.470994,
+     45.488112
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "boring",
+    "name": "Boring",
+    "aliases": [
+     "Boring Depot & Substation"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.375251,
+     45.431198
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "eagle-creek",
+    "name": "Eagle Creek",
+    "aliases": [
+     "Eagle Creek Depot & Substation"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.360727,
+     45.358722
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "east-portland",
+    "name": "East Portland"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.665843,
+     45.512371
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "somerfeldt",
+    "name": "Somerfeldt"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.576623,
+     45.465947
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "1st-alder",
+    "name": "1st & Alder"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.673247,
+     45.51841
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "motor-boat-siding",
+    "name": "Motor Boat Siding",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.660425,
+     45.498978
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "wool-pullery",
+    "name": "Wool Pullery",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.659085,
+     45.460978
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "brewery-spur",
+    "name": "Brewery Spur",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.656009,
+     45.458902
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "kunitake-spur",
+    "name": "Kunitake Spur",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.399447,
+     45.470357
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "jap-spur",
+    "name": "Jap Spur",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.391613,
+     45.463166
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "hoover-spur",
+    "name": "Hoover Spur"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.381965,
+     45.452445
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "summit-spur",
+    "name": "Summit Spur",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.38034,
+     45.437122
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "pages-spur",
+    "name": "Pages Spur"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.400751,
+     45.407137
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chandler-spur",
+    "name": "Chandler Spur"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.407885,
+     45.396777
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "cummins-spur",
+    "name": "Cummins Spur",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.395258,
+     45.381482
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "suttle-spur",
+    "name": "Suttle Spur"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.378204,
+     45.370524
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "millers-spur",
+    "name": "Millers Spur"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.349628,
+     45.332324
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "hogan",
+    "name": "Hogan",
+    "note": "Not a passenger stop in the 1916 timetable"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.414068,
+     45.48083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "wills-spur",
+    "name": "Wills Spur",
+    "note": "Not a passenger stop in the 1916 timetable"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.321343,
+     45.275075
+    ]
+   }
+  }
+ ]
+}
