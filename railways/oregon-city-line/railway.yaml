@@ -1,0 +1,69 @@
+id: oregon-city-line
+name: Oregon City Line
+operator: Portland Railway, Light & Power Co.
+opened: 1893              # first through service
+closed: 1958              # passenger service ended January 25, 1958
+timezone: America/Los_Angeles
+colour: "#6b4c8a"
+
+# Track: City of Portland street centrelines (downtown loop, Hawthorne Bridge, SE Water Ave) and the
+# Springwater on the Willamette Trail to Golf Junction; Portland Traction Co. valuation plats (Section 2,
+# placed on control points read off georeferenced plats) to Oregon City; ODOT highway plat 1B-12-6 to
+# Canemah; Clackamas County survey SN1910-010 down Water St to the end of track (527+26.6).
+# Stations: the PRL&P 1917 station circular, by its distances from Golf Junction.
+
+featured: "1916"
+
+eras:
+  - id: "1916"
+    label: Portland – Oregon City – Canemah Park
+    days: daily
+    source: trout-route-1916
+    notes:
+      - Times as printed at Portland, Golf Junction, Oregon City and Canemah Park; stations between are
+        estimated by distance.
+      - Limited trains 154, 156, 158 (southbound) and 107, 109 (northbound) make no passenger stops north
+        of Island except Sundays; shown here as skipping those stops (weekday pattern).
+      - Trains 110, 123, 139 and 140 connect with Willamette Valley Southern trains at 14th St, Oregon City.
+      - Train 101, the Milwaukie local (daily except Sunday), runs Milwaukie 5:53 to Portland 6:25 am.
+      - Canemah Park is still a timetable stop in 1916; the track beyond it into Canemah (Water St) was
+        taken out by 1917 (the circular lists Canemah as eliminated, "track taken out"). The stop is
+        placed at the foot of the stairs up to the park.
+  - id: "1911"
+    label: Portland – Oregon City
+    days: daily
+    source: enterprise-1911
+    notes:
+      - Departures as printed in the April 16, 1911 schedule; trains are labelled by departure time.
+      - Running time 1st & Alder – Oregon City is estimated at 55 minutes (60 in 1903 on the older
+        route; 50 for WVS through trains on this route in 1926), so every arrival is marked "~".
+        Stations between are estimated by distance.
+      - Oregon City times are from the freight depot at the south end of town.
+      - Car-barn trips start or end at Golf Junction (the Golf Links car barns), about 35 minutes
+        from Oregon City.
+      - Not modelled - Sundays the 9:00 pm car from Portland left at 9:15; Canemah Park was served
+        by separate Canemah cars.
+
+sources:
+  trout-route-1916: >-
+    "The Trout Route", Portland Railway Light and Power Company interurban lines public timetable,
+    February 1916 (Sheldon Perry collection, wx4.org).
+  enterprise-1911: >-
+    Morning Enterprise (Oregon City), April 16, 1911: the new PRL&P Oregon City schedule,
+    effective that day (correcting the April 14, 1911 report, p. 4).
+  journal-1903: >-
+    Oregon Daily Journal, November 26, 1903, p. 20: one hour from 1st & Alder to Oregon City.
+  prlp-1917: >-
+    Portland Railway, Light & Power Co., Traffic Department Circular, "List of Freight and Passenger
+    Stations and Table of Distances on Interurban Lines", issued January 8, 1917: station names, flag
+    stops and distances.
+  valuation-section-2: >-
+    Portland Traction Co., Right of Way and Track Maps, Valuation Section 2, Golf Jct to Canemah
+    (revised to 1972): curve data and stationing.
+  odot-1b-12-6: >-
+    Oregon State Highway Department right-of-way plat 1B-12-6 (1920s): the PRL&P track from Oregon City
+    to Canemah.
+  clackamas-sn1910-010: >-
+    Clackamas County survey record SN1910-010 (1910): the line to the end of track in Canemah.
+  portland-maps: >-
+    City of Portland (PortlandMaps): street centrelines and the Springwater on the Willamette Trail.

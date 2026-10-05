@@ -14,9 +14,10 @@ CSV columns: from_sta, to_sta, type (tangent | curve | equation), radius, delta,
 
 Control point CSV columns: label, easting_ft, northing_ft, station, offset_ft, sheet, notes.
 offset_ft is the distance from the centreline, e.g. "15 right" (right of the direction of
-stationing) or "0". A point with a station fixes position along and across the line; one
-with an offset but no station only says how far it is from the line (e.g. clicks down the
-middle of the old right-of-way strip); one with neither is a check, not used in the fit.
+stationing) or "0". A point with both fixes position along and across the line; a station
+alone fixes it along the line only (e.g. a bridge end whose offset isn't known); an offset
+alone only says how far the point is from the line (e.g. clicks down the middle of the old
+right-of-way strip); a point with neither is a check, not used in the fit.
 """
 
 import csv
@@ -182,11 +183,11 @@ def place(points, controls, rotation, translation, along_weight=0.2):
                 out.append((None, nearest(q) - off))
             else:
                 p, t = at(c["station"]); p = p + off * np.array([t[1], -t[0]]); d = q - p
-                out.append((d @ t, t[1] * d[0] - t[0] * d[1]))
+                out.append((d @ t, None if c["offset"] is None else t[1] * d[0] - t[0] * d[1]))
         return out
 
     def resid(v):
-        return [r for a, x in misses(v) for r in ([x] if a is None else [x, along_weight * a])]
+        return [r for a, x in misses(v) for r in ([] if x is None else [x]) + ([] if a is None else [along_weight * a])]
 
     v = least_squares(resid, [rotation, *translation]).x
     return v[0], (v[1], v[2]), {c["label"]: m for c, m in zip(used, misses(v))}

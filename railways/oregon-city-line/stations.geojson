@@ -1,0 +1,618 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "1st-alder",
+    "name": "1st & Alder"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.673247,
+     45.51841
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "east-portland",
+    "name": "East Portland",
+    "note": "East Water Street and Hawthorne Avenue (1917 circular)."
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.665843,
+     45.512371
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "motor-boat-siding",
+    "name": "Motor Boat Siding",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.660425,
+     45.498978
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "the-oaks",
+    "name": "The Oaks"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.661192,
+     45.471528
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "chutes",
+    "name": "Chutes",
+    "note": "Siding by the Oaks amusement park"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.662379,
+     45.468459
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ferry",
+    "name": "Ferry"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.66163,
+     45.464672
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "harney-avenue",
+    "name": "Harney Avenue",
+    "note": "Not on the 1917 station list; appears on the 1926 timetable"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.659999,
+     45.462187
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "wool-pullery",
+    "name": "Wool Pullery",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.659085,
+     45.460978
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "brewery-spur",
+    "name": "Brewery Spur",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.656009,
+     45.458902
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "golf-junction",
+    "name": "Golf Junction",
+    "aliases": [
+     "Golf Links"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.653651,
+     45.4584
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ardgour",
+    "name": "Ardgour"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.652276,
+     45.452477
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "overlinks",
+    "name": "Overlinks"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.650853,
+     45.449299
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "knight",
+    "name": "Knight",
+    "aliases": [
+     "Knights"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.647922,
+     45.44591
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "hendee",
+    "name": "Hendee"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.645873,
+     45.445325
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "milwaukie",
+    "name": "Milwaukie",
+    "note": "Placed by the 1917 station circular, about 720 ft north of the 1972 valuation plat's Milwaukie (77+52.18)."
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.642621,
+     45.443351
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "scotts-spur",
+    "name": "Scotts Spur",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.641309,
+     45.439022
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "island",
+    "name": "Island"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.640521,
+     45.437781
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "lakewood",
+    "name": "Lakewood"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.635432,
+     45.432749
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "evergreen",
+    "name": "Evergreen"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.636459,
+     45.429793
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "silver-spring",
+    "name": "Silver Spring"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.638939,
+     45.426979
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "courtney",
+    "name": "Courtney"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.64167,
+     45.421826
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "st-theresa",
+    "name": "St. Theresa"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.641662,
+     45.419234
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "oak-grove",
+    "name": "Oak Grove"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.641654,
+     45.416352
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rupert",
+    "name": "Rupert"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.639515,
+     45.411194
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "risley",
+    "name": "Risley"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.637013,
+     45.409028
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "concord",
+    "name": "Concord"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.6339,
+     45.406147
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "vineyard",
+    "name": "Vineyard"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.629332,
+     45.402377
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "naef-siding",
+    "name": "Naef Siding",
+    "note": "Freight only"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.627213,
+     45.400942
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "naef",
+    "name": "Naef"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.624487,
+     45.399095
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rothe",
+    "name": "Rothe"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.621346,
+     45.396967
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "boardman",
+    "name": "Boardman"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.617168,
+     45.394136
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "jennings-lodge",
+    "name": "Jennings Lodge"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.612398,
+     45.390903
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "hull-avenue",
+    "name": "Hull Avenue"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.609895,
+     45.389207
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "meldrum",
+    "name": "Meldrum"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.607495,
+     45.38758
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "glen-echo",
+    "name": "Glen Echo"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.60557,
+     45.386275
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "fern-ridge",
+    "name": "Fern Ridge"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.600713,
+     45.38402
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "gladstone",
+    "name": "Gladstone"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.594083,
+     45.379422
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "arlington",
+    "name": "Arlington",
+    "note": "Shown on the PRL&P right-of-way plat; not a 1911 stop"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.592991,
+     45.377777
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "park-place",
+    "name": "Park Place"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.592413,
+     45.374157
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "oregon-city-14th-main",
+    "name": "Oregon City 14th & Main",
+    "aliases": [
+     "Green Point",
+     "Oregon City (14th and Main Streets)"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.601433,
+     45.362541
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "oregon-city",
+    "name": "Oregon City",
+    "aliases": [
+     "Oregon City (3rd and Main Streets)",
+     "Oregon City Station & Freight House"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.611113,
+     45.355642
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "canemah-park",
+    "name": "Canemah Park",
+    "note": "At the foot of the stairs up to Canemah Park (ODOT highway plat 1B-12-6); the 1917 circular's fare mileage puts it about 490 ft further on."
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.618494,
+     45.348833
+    ]
+   }
+  }
+ ]
+}

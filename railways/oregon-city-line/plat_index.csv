@@ -1,0 +1,18 @@
+line,feature,type,station,milepost,sheet,revision,notes,series
+oregon-city-line,East Portland,station,,0,1917 circular,1917,"mileage origin of the Portland Traction Co. stationing (MP 0); circular distances from East Portland",
+oregon-city-line,The Oaks,station,,3.109,1917 circular,1917,,
+oregon-city-line,Golf Junction,station,,4.210,1917 circular,1917,"MP 4.2 on the 1972 plat",
+oregon-city-line,MP 5,milepost,39+09.02,5,2,1972,"not printed; derived from MP 6 less 5,280 ft and the 58+46.26 station equation",ocl
+oregon-city-line,Begin,begin,0+00.00,,2,1972,"BC of the curve off the Gresham line at Golf Junction (Golf Junction itself is 250+13.5 on the Gresham line's stationing, MP 4.2)",ocl
+oregon-city-line,Equation,equation,58+46.26 back = 59+93.42 ahead,,3,1972,,ocl
+oregon-city-line,Milwaukie (1972),depot,77+52.18,5.7,3,1972,"the 1917 circular puts the Milwaukie stop about 720 ft north of this",ocl
+oregon-city-line,MP 6,milepost,93+36.18,6,3,1972,,ocl
+oregon-city-line,Equation,equation,117+45.14 back = 117+41.27 ahead,,4,1972,,ocl
+oregon-city-line,MP 7,milepost,146+12.31,7,4,1972,,ocl
+oregon-city-line,Oak Grove,station,177+80.31,7.6,5,1972,,ocl
+oregon-city-line,Rothe,station,267+56.31,9.3,6,1972,,ocl
+oregon-city-line,Hull Avenue,station,309+80.31,10.1,7,1972,plat spells it Hull Ave,ocl
+oregon-city-line,Gladstone,station,367+88.31,11.2,8,1972,,ocl
+oregon-city-line,Park Place,station,389+00.31,11.6,9,1972,,ocl
+oregon-city-line,MP 12,milepost,410+12.31,12,9,1972,"not printed; derived: the plat mileposts are exactly 5,280 ft of stationing apart",ocl
+oregon-city-line,MP 13,milepost,462+92.31,13,10,1972,,ocl

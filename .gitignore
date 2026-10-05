@@ -5,7 +5,6 @@ dist/
 .tools/
 
 # Local pilots built on others' unpublished data.
-railways/oregon-city-line/
 railways/springwater-line/
 railways/mount-hood-line/
 railways/troutdale-line/
