@@ -64,7 +64,7 @@ Each feed's calendar runs from 2000 to 2099, so any GTFS tool shows the trains r
 
 `dev/coords.html` reads Oregon North state plane coordinates (EPSG:2913, international feet) from a click, over Portland Maps' aerials from 1925 on (Sellwood to about Oak Grove) and West Linn's from 1936 on (Jennings Lodge to Canemah, both sides of the river), Portland Maps' parcel dimensions and the regional tax lots, with the railways (or a local GeoJSON) on top. Labelled points export as CSV, e.g. as control points for a plat alignment. It converts without a datum shift, as Portland Maps' servers do; pyproj's default shift differs by about 4 ft.
 
-`pipeline/alignment.py` rebuilds a line from plat curve data (stationing, radius, central angle, turn) and fits it to reference geometry.
+`pipeline/alignment.py` rebuilds a line from plat curve data (stationing, radius, central angle, turn), fits it roughly to reference geometry, then places it on control points read off georeferenced plats: stationed points, or points a known distance from the centreline with no station. It isn't part of the build and needs `pip install numpy scipy`.
 
 ## Railways
 

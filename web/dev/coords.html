@@ -244,7 +244,7 @@ try {
     const box = document.createElement("label");
     box.innerHTML = `<input type="checkbox"> <span style="color:${r.colour}">■</span> ${r.name}`;
     const cb = box.querySelector("input");
-    cb.checked = !!shown[r.id];
+    cb.checked = shown[r.id] ?? true;   // every railway shows until you switch it off
     let loaded = false;
     cb.onchange = async () => {
       shown[r.id] = cb.checked; store.set("coords.lines", shown);

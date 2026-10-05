@@ -7,9 +7,16 @@ and central angle must agree with its stationing (checked on load).
 
 The alignment is built in a local frame (feet, starting at the origin heading
 east), then placed on the map by a rigid fit (rotation + translation, no
-scaling) to reference geometry.
+scaling): roughly to reference geometry (`fit`), then exactly to control points
+the user reads off georeferenced plats (`place`).
 
 CSV columns: from_sta, to_sta, type (tangent | curve | equation), radius, delta, turn (L | R), sheet, notes
+
+Control point CSV columns: label, easting_ft, northing_ft, station, offset_ft, sheet, notes.
+offset_ft is the distance from the centreline, e.g. "15 right" (right of the direction of
+stationing) or "0". A point with a station fixes position along and across the line; one
+with an offset but no station only says how far it is from the line (e.g. clicks down the
+middle of the old right-of-way strip); one with neither is a check, not used in the fit.
 """
 
 import csv
@@ -124,3 +131,62 @@ def fit(points, reference, iterations=60):
             best = (Rt, rms, float(dist.max()), tt)
     Rt, rms, mx, tt = best
     return (lambda xy: tuple((np.array(xy) @ Rt.T + tt).tolist())), rms, mx
+
+
+def read_controls(path):
+    """Control points: dicts with label, xy (feet), station (feet or None), offset (feet right, or None)."""
+    out = []
+    with open(path, newline="", encoding="utf8") as f:
+        for r in csv.DictReader(f):
+            m = re.match(r"\s*([\d.]+)\s*(left|right)?", r.get("offset_ft") or "")
+            out.append({"label": r["label"], "xy": (float(r["easting_ft"]), float(r["northing_ft"])),
+                        "station": _sta(r["station"]) if (r.get("station") or "").strip() else None,
+                        "offset": float(m[1]) * (-1 if m[2] == "left" else 1) if m else None})
+    return out
+
+
+def place(points, controls, rotation, translation, along_weight=0.2):
+    """Rigidly place traced `points` (x, y, station) on control points, starting from a rough
+    placement (rotation radians, translation (x, y)). Across-track misses set the angle and
+    are trusted; along-track misses are weighted down, since stationing over miles (and
+    georeferencing) can stretch a little. Returns (rotation, translation, misses), where
+    misses gives each used point's (along, across) miss in feet, across positive to the right."""
+    import numpy as np
+    from scipy.optimize import least_squares
+    P = np.array([(p[0], p[1]) for p in points]); S = np.array([p[2] for p in points])
+    seg = P[1:] - P[:-1]; seg_len = np.linalg.norm(seg, axis=1); keep = seg_len > 0
+
+    def at(s):
+        """Point and unit tangent at station s (local frame)."""
+        i = min(max(int(np.searchsorted(S, s)), 1), len(P) - 1)
+        u = (s - S[i - 1]) / ((S[i] - S[i - 1]) or 1); t = (P[i] - P[i - 1]) / (np.linalg.norm(P[i] - P[i - 1]) or 1)
+        return P[i - 1] + u * (P[i] - P[i - 1]), t
+
+    def nearest(q):
+        """Signed distance (right +) from a local-frame point to the line."""
+        a, d = P[:-1][keep], seg[keep]
+        t = np.clip(((q - a) * d).sum(1) / (d ** 2).sum(1), 0, 1); c = a + t[:, None] * d
+        j = np.linalg.norm(c - q, axis=1).argmin(); tv = d[j] / np.linalg.norm(d[j]); r = q - c[j]
+        return tv[1] * r[0] - tv[0] * r[1]
+
+    used = [c for c in controls if c["station"] is not None or c["offset"] is not None]
+
+    def misses(v):
+        th, tx, ty = v
+        R = np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]])
+        out = []
+        for c in used:
+            q = (np.array(c["xy"]) - (tx, ty)) @ R       # control point in the local frame
+            off = c["offset"] or 0.0
+            if c["station"] is None:
+                out.append((None, nearest(q) - off))
+            else:
+                p, t = at(c["station"]); p = p + off * np.array([t[1], -t[0]]); d = q - p
+                out.append((d @ t, t[1] * d[0] - t[0] * d[1]))
+        return out
+
+    def resid(v):
+        return [r for a, x in misses(v) for r in ([x] if a is None else [x, along_weight * a])]
+
+    v = least_squares(resid, [rotation, *translation]).x
+    return v[0], (v[1], v[2]), {c["label"]: m for c, m in zip(used, misses(v))}
