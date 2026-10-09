@@ -72,6 +72,8 @@ Each feed's calendar runs from 2000 to 2099, so any GTFS tool shows the trains r
 - **Willamette Falls Railway** (1925 timetable): Tualatin River – West Linn – Magones.
 - **Oregon City Line** (1911 and 1916 timetables): Portland – Milwaukie – Oregon City – Canemah Park, Portland Railway, Light & Power Co.
 - **Springwater Line** (1916 timetable): Portland – Lents – Gresham – Boring – Estacada – Cazadero, Portland Railway, Light & Power Co.
+- **Mount Hood Line** (1916 timetable): Portland – Linnemann Junction – Gresham – Bull Run, Portland Railway, Light & Power Co. East of Linnemann Junction the track and stations are from Cameron Booth's 1920 map.
+- **Troutdale Line** (1916 timetable): Montavilla and Linnemann Junction – Ruby Junction – Troutdale, Portland Railway, Light & Power Co. Track and stations from Cameron Booth's 1920 map.
 
 ## License
 

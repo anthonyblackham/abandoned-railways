@@ -1,0 +1,32 @@
+# Track: Cameron Booth's 1920 map, meeting the Springwater Line at Linnemann Junction.
+# Stations: the PRL&P 1917 station circular, placed on Booth's map.
+id: troutdale-line
+name: Troutdale Line
+operator: Portland Railway, Light & Power Co.
+opened: 1907
+closed: 1927
+timezone: America/Los_Angeles
+colour: "#4f6fa0"
+featured: "1916"
+
+eras:
+  - id: "1916"
+    label: Montavilla / Linnemann Jct – Ruby Jct – Troutdale
+    days: daily
+    source: trout-route-1916
+    notes:
+      - Two branches meet at Ruby Junction - trains run from Montavilla or from Linnemann Junction.
+        Train 66 waits at Ruby Junction (7:30 to 7:41) for train 398 from Linnemann Junction.
+      - Trains 64 and 63 ran daily except Sunday.
+      - Times as printed at the timepoints; stations between are estimated by distance.
+
+sources:
+  trout-route-1916: >-
+    "The Trout Route", Portland Railway Light and Power Company interurban lines public timetable,
+    February 1916 (Sheldon Perry collection, wx4.org).
+  booth: >-
+    Cameron Booth, "Portland and Willamette/Tualatin Valley Electric Railways, 1920" (Google My Maps):
+    line and stations.
+  prlp-1917: >-
+    Portland Railway, Light & Power Co., Traffic Department Circular, "List of Freight and Passenger
+    Stations and Table of Distances on Interurban Lines", issued January 8, 1917.

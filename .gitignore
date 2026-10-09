@@ -4,6 +4,3 @@ node_modules/
 dist/
 .tools/
 
-# Local pilots built on others' unpublished data.
-railways/mount-hood-line/
-railways/troutdale-line/

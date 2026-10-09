@@ -1,0 +1,382 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "west-ascot",
+    "name": "West Ascot"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.521355,
+     45.52239
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ascot",
+    "name": "Ascot"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.515562,
+     45.522345
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "east-ascot",
+    "name": "East Ascot"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.508566,
+     45.522285
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "elwood",
+    "name": "Elwood"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.493546,
+     45.522195
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rockwood",
+    "name": "Rockwood"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.477796,
+     45.52203
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "eastwood",
+    "name": "Eastwood"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.466778,
+     45.51885
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ruby-junction",
+    "name": "Ruby Junction",
+    "aliases": [
+     "Ruby"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.456768,
+     45.514632
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "base-line",
+    "name": "Base Line"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.457146,
+     45.519256
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "baird-s-dale",
+    "name": "Baird's Dale"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.45669,
+     45.533317
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "cleone",
+    "name": "Cleone"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.439752,
+     45.534972
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "fairview",
+    "name": "Fairview"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.433883,
+     45.535123
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "multnomah-farm",
+    "name": "Multnomah Farm"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.407254,
+     45.538737
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "troutdale",
+    "name": "Troutdale",
+    "aliases": [
+     "Troutdale Depot"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.39248,
+     45.540608
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "russellville",
+    "name": "Russellville"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.563198,
+     45.522676
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "linnemann-junction",
+    "name": "Linnemann Junction",
+    "aliases": [
+     "Linneman Junction",
+     "Linneman Junction Depot"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.470994,
+     45.488112
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "montavilla",
+    "name": "Montavilla",
+    "aliases": [
+     "Montavilla Depot"
+    ]
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.571191,
+     45.527017
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "brunner",
+    "name": "Brunner"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.458291,
+     45.504828
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "brunswick",
+    "name": "Brunswick"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.557931,
+     45.52263
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "ventura-park",
+    "name": "Ventura Park"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.537482,
+     45.522494
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "varnell",
+    "name": "Varnell"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.528963,
+     45.522449
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "verdanta",
+    "name": "Verdanta"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.486304,
+     45.522096
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "nendel",
+    "name": "Nendel"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.550539,
+     45.522588
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "hope",
+    "name": "Hope"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.472544,
+     45.521207
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "osborn",
+    "name": "Osborn"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.45187,
+     45.536284
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "arata",
+    "name": "Arata"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.418154,
+     45.537272
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "keady",
+    "name": "Keady"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -122.40138,
+     45.539079
+    ]
+   }
+  }
+ ]
+}

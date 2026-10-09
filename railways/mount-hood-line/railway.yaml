@@ -1,0 +1,33 @@
+# Track: the Springwater Line's track (plats and public data) to Linnemann Junction; beyond it,
+# Cameron Booth's 1920 map. Stations: the PRL&P 1917 station circular, placed on Booth's map.
+id: mount-hood-line
+name: Mount Hood Line
+operator: Portland Railway, Light & Power Co.
+opened: 1911
+closed: 1930
+timezone: America/Los_Angeles
+colour: "#7a5a2f"
+featured: "1916"
+
+eras:
+  - id: "1916"
+    label: Portland – Gresham – Bull Run
+    days: daily
+    source: trout-route-1916
+    notes:
+      - Weekday pattern of the February 1916 timetable; the Sunday-only extra is left out. Trains 6 and 5
+        ran between Pleasant Home and the city (Pleasant Home daily except Sunday).
+      - Train 402 is printed reaching Cottrell at 2:05, a minute after Pleasant Home and 1.5 miles away;
+        every other train takes 5 minutes there, so it is read as ~2:09.
+      - Times as printed at the timepoints; stations between are estimated by distance.
+
+sources:
+  trout-route-1916: >-
+    "The Trout Route", Portland Railway Light and Power Company interurban lines public timetable,
+    February 1916 (Sheldon Perry collection, wx4.org).
+  booth: >-
+    Cameron Booth, "Portland and Willamette/Tualatin Valley Electric Railways, 1920" (Google My Maps):
+    line and stations.
+  prlp-1917: >-
+    Portland Railway, Light & Power Co., Traffic Department Circular, "List of Freight and Passenger
+    Stations and Table of Distances on Interurban Lines", issued January 8, 1917.
